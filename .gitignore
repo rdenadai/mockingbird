@@ -82,6 +82,11 @@ celerybeat-schedule
 venv/
 ENV/
 
+# gen asset files
+gen/
+GEN/
+.webassets-cache/
+
 # Spyder project settings
 .spyderproject
 
