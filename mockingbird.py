@@ -13,7 +13,7 @@ assets = Environment()
 
 css = Bundle('css/material.min.css', 'css/material-icons.css', 'css/font-awesome.min.css', 'css/base.css',
             filters='cssmin', output='gen/packed.css')
-js = Bundle('js/zepto.min.js', 'js/material.min.js', 'js/base.js',
+js = Bundle('js/zepto.min.js', 'js/howler.min.js', 'js/handlebars-v4.0.5.js', 'js/material.min.js', 'js/base.js',
             filters='jsmin', output='gen/packed.js')
 
 assets.register('css_all', css)
