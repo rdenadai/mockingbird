@@ -20,6 +20,8 @@
         <div class="mdl-layout mdl-js-layout mdl-layout--fixed-drawer mdl-layout--fixed-header">
             <header class="mdl-layout__header">
                 <div class="mdl-layout__header-row">
+                    <!-- Title -->
+                    <span class="mdl-layout-title">Mockingbird</span>
                     <div class="mdl-layout-spacer"></div>
                     <div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable
                         mdl-textfield--floating-label mdl-textfield--align-right">
@@ -33,26 +35,26 @@
                 </div>
             </header>
             <div class="mdl-layout__drawer">
-                <span class="mdl-layout-title"><i class="fa fa-podcast"></i>&nbsp;&nbsp;Mockingbird</span>
+                <span class="mdl-layout-title"><strong>Mockingbird</strong></span>
                 <nav class="mdl-navigation">
-                    <a class="mdl-navigation__link" href=""><i class="fa fa-plus-square"></i>&nbsp;&nbsp;New podcast</a>
-                    <a class="mdl-navigation__link" href="">Link</a>
-                    <a class="mdl-navigation__link" href="">Link</a>
-                    <a class="mdl-navigation__link" href="">Link</a>
+                    <a class="mdl-navigation__link action-navigation" href="#home"><i class="fa fa-home"></i>&nbsp;&nbsp;Principal</a>
+                    <a class="mdl-navigation__link action-navigation" href="#">Link</a>
+                    <a class="mdl-navigation__link action-navigation" href="#">Link</a>
+                    <a class="mdl-navigation__link action-navigation" href="#">Link</a>
                 </nav>
             </div>
             <main class="mdl-layout__content">
                 <div class="page-content">
                     <div class="mdl-grid">
-                        <div id="content" class="mdl-cell mdl-cell--12-col">
-                            {% block body %}{% endblock %}
+                        <div id="content" class="mdl-cell mdl-cell--12-col"></div>
+                        <div id="default-mockingbird-snackbar" class="mdl-js-snackbar mdl-snackbar">
+                            <strong><div class="mdl-snackbar__text"></div></strong>
+                            <button class="mdl-snackbar__action" type="button"></button>
                         </div>
                     </div>
                 </div>
             </main>
         </div>
-
-
 
         <script type="text/javascript" src="/static/js/pouchdb-6.0.7.min.js" defer></script>
         {% assets "js_all" %}
@@ -60,5 +62,3 @@
         {% endassets %}
     </body>
 </html>
-
-

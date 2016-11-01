@@ -1,7 +1,7 @@
 from flask import Flask, request, send_from_directory
 from flask_assets import Environment, Bundle
 
-from starter.index import starter
+from principal.index import principal
 
 # Flask app
 # ------------------------------------------
@@ -13,7 +13,11 @@ assets = Environment()
 
 css = Bundle('css/material.min.css', 'css/material-icons.css', 'css/font-awesome.min.css', 'css/base.css',
             filters='cssmin', output='gen/packed.css')
-js = Bundle('js/zepto.min.js', 'js/howler.min.js', 'js/handlebars-v4.0.5.js', 'js/material.min.js', 'js/base.js',
+js = Bundle('js/material.min.js', 'js/zepto.min.js', 'js/howler.min.js', 'js/handlebars-v4.0.5.js', 'js/velocity.min.js',
+            'js/utils/functions.js', 'js/utils/models.js', 'js/utils/actions.js',
+            'js/events/index.js',
+            'js/events/addpodcast.js',
+            'js/base.js',
             filters='jsmin', output='gen/packed.js')
 
 assets.register('css_all', css)
@@ -23,7 +27,7 @@ assets.init_app(app)
 
 # apps
 # ------------------------------------------
-app.register_blueprint(starter)
+app.register_blueprint(principal)
 
 # configs
 # ------------------------------------------

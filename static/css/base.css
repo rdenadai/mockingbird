@@ -1,0 +1,30 @@
+.mocking-card-wide {
+    width: 100%;
+}
+
+.mocking-card-wide > .mdl-card__title {
+  color: #fff;
+  height: 176px;
+  background: url('/static/img/cover.png') center / cover;
+}
+
+.mocking-card-wide > .mdl-card__menu {
+  color: #fff;
+}
+
+.mdl-button--floating-action {
+    bottom: 25px;
+    position: fixed;
+    right: 25px;
+    z-index: 998;
+}
+
+
+@media (min-width: 700px) and (orientation: landscape) {
+    .mocking-card-wide > .mdl-card__title {
+      color: #fff;
+      height: 276px;
+      background: url('/static/img/cover.png') center / cover;
+    }
+}
+

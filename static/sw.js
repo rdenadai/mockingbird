@@ -11,6 +11,9 @@
             caches.open(cacheName).then(function(cache) {
                 return cache.addAll([
                     '/',
+                    '/home/',
+                    '/addpodcast/',
+                    '/static/img/cover.png',
                     '/static/gen/packed.css',
                     '/static/js/pouchdb-6.0.7.min.js',
                     '/static/gen/packed.js',

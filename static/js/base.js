@@ -1,4 +1,4 @@
-(function() {
+let init = (function() {
     'use strict';
 
     // register the service worker if available
@@ -12,35 +12,24 @@
 
     window.addEventListener('online', function(e) {
         // re-sync data with server
-        console.log("You are online");
+        actions.showDefaultSnackBar("You are online! :D");
     }, false);
 
     window.addEventListener('offline', function(e) {
         // queue up events for server
-        console.log("You are offline");
+        actions.showDefaultSnackBar("You are offline... :(");
     }, false);
 
     // check if the user is connected
-    if (navigator.onLine) {
-        console.log("You are online");
-    } else {
-        // show offline message
-        console.log("You are offline");
-    }
+//    if (navigator.onLine) {
+//        actions.showDefaultSnackBar("You are online");
+//    } else {
+//        // show offline message
+//        actions.showDefaultSnackBar("You are offline");
+//    }
+    actions.loadHomeScreen();
+});
 
-    class Person {
-        constructor() {
-            console.log("Construindo...")
-            this.x = 0;
-        }
-        move(x, y=5) {
-            this.x += x;
-            console.log(this.x);
-            console.log(y);
-        }
-    };
-
-    let person = new Person();
-    person.move(10);
-
-})();
+document.addEventListener("DOMContentLoaded", function(event) {
+    init();
+});
