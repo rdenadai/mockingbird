@@ -2,11 +2,12 @@ let functions = (function() {
     'use strict';
 
     function load(url, elementTo) {
-        function execute(response) {
+        function execute(response, elementTo) {
             // Examine the text in the response
             response.text().then(function(data) {
                 $(elementTo).html(data);
                 $(elementTo).velocity({ opacity: 1, visibility: "visible" });
+                componentHandler.upgradeElements(document.querySelector(elementTo));
             });
             return response;
         };
@@ -16,7 +17,7 @@ let functions = (function() {
                 caches.match(url).then(function(response) {
                     if (response) {
                         // retrieve from cache
-                        return execute(response);
+                        return execute(response, elementTo);
                     }
 
                     let headers = new Headers();
@@ -35,7 +36,7 @@ let functions = (function() {
                             if (response.status !== 200) {
                                 return;
                             }
-                            return execute(response);
+                            return execute(response, elementTo);
                         }
                     )
                     .catch(function(err) {

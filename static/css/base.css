@@ -19,6 +19,37 @@
     z-index: 998;
 }
 
+.mockingbird-list .mdl-list__item {
+    padding: 0px;
+}
+
+.mockingbird-list .mdl-list__item-primary-content {
+    text-align: justify;
+    height: auto;
+}
+
+.thumbnail {
+    position: relative;
+    width: 80px;
+    height: 80px;
+    margin-right: 16px;
+    overflow: hidden;
+}
+.thumbnail img {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    height: 100%;
+    width: auto;
+    -webkit-transform: translate(-50%,-50%);
+        -ms-transform: translate(-50%,-50%);
+            transform: translate(-50%,-50%);
+}
+.thumbnail img.portrait {
+    width: 100%;
+    height: auto;
+}
+
 
 @media (min-width: 700px) and (orientation: landscape) {
     .mocking-card-wide > .mdl-card__title {
