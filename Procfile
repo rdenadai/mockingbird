@@ -1,0 +1,1 @@
+web: gunicorn mockingbird:app --workers=4 --timeout 300 --graceful-timeout 300 --no-sendfile
