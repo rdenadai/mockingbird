@@ -83,8 +83,8 @@ venv/
 ENV/
 
 # gen asset files
-gen/
-GEN/
+# gen/
+# GEN/
 .webassets-cache/
 
 # Spyder project settings
