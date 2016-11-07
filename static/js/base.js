@@ -20,6 +20,13 @@ let init = (function() {
         actions.showDefaultSnackBar("You are offline... :(");
     }, false);
 
+    window.onpopstate = function(event) {
+        if(event.state.url) {
+            actions.load(event.state.url);
+            history.remove(event.state.url);
+        }
+    };
+
     // check if the user is connected
 //    if (navigator.onLine) {
 //        actions.showDefaultSnackBar("You are online");

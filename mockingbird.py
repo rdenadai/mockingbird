@@ -13,8 +13,8 @@ assets = Environment()
 
 css = Bundle('css/material.min.css', 'css/material-icons.css', 'css/font-awesome.min.css', 'css/base.css',
             filters='cssmin', output='gen/packed.css')
-js = Bundle('js/material.min.js', 'js/zepto.min.js', 'js/howler.min.js', 'js/handlebars-v4.0.5.js', 'js/velocity.min.js',
-            'js/utils/functions.js', 'js/utils/models.js', 'js/utils/actions.js',
+js = Bundle('js/libs/material.min.js', 'js/libs/zepto.min.js', 'js/libs/howler.min.js', 'js/libs/handlebars-v4.0.5.js', 'js/libs/velocity.min.js',
+            'js/utils/history.js', 'js/utils/functions.js', 'js/utils/models.js', 'js/utils/actions.js',
             'js/events/index.js',
             'js/events/addpodcast.js',
             'js/base.js',

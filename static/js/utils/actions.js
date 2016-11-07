@@ -7,16 +7,23 @@ let actions = (function() {
         snackbar.show();
     };
 
+    function load(url = '/', elementTo = '#content') {
+        functions.load(url, elementTo);
+    }
+
     function loadHomeScreen(elementTo = '#content') {
-        functions.load('./home/', elementTo);
+        history.add({url: '/home/'}, 'Home', '/home/');
+        functions.load('/home/', elementTo);
     }
 
     function addPodcastInterface(elementTo = '#content') {
-        functions.load('./addpodcast/', elementTo);
+        history.add({url: '/addpodcast/'}, 'Add Podcast', '/addpodcast/');
+        functions.load('/addpodcast/', elementTo);
     };
 
     return {
         showDefaultSnackBar: showDefaultSnackBar,
+        load: load,
         loadHomeScreen: loadHomeScreen,
         addPodcastInterface: addPodcastInterface
     }
