@@ -95,7 +95,6 @@ module.exports = {
             maximumFileSizeToCacheInBytes: 10485760,
             directoryIndex: null,
             staticFileGlobs: [
-                "./",
                 "/**.html",
                 "/**.txt",
                 "static/**.js",
@@ -112,6 +111,10 @@ module.exports = {
                 "static/img/**.png",
                 "static/img/icon/**.png"
             ],
+            runtimeCaching: [{
+              handler: 'cacheFirst',
+              urlPattern: /\/$/,
+            }],
             verbose: true
         }),
         // Deploy everything to template
