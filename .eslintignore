@@ -1,0 +1,6 @@
+dist
+node_modules
+venv
+webpack.*.js
+app.py
+requirements.txt

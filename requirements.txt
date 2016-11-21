@@ -3,3 +3,4 @@ Flask-Assets==0.12
 jsmin==2.2.1
 cssmin==0.2.0
 gunicorn==19.6.0
+uwsgi==2.0.14
