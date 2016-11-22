@@ -18,25 +18,22 @@ function isExternal(module) {
          userRequest.indexOf('libraries') >= 0;
 }
 
+// Example:
+// https://www.youtube.com/watch?v=qPHlCDOzCEk
+
 module.exports = {
     entry: {
         vendor: [
             'react',
             'react-dom',
             'redux',
-            'react-redux'
-        ],
-        'react-extras': [
+            'react-redux',
             'react-router',
-            'react-tap-event-plugin',
-            'material-ui'
-        ],
-        'redux-extras': [
             'redux-promise',
             'redux-thunk',
-            'redux-form'
-        ],
-        libraries: [
+            'redux-form',
+            'react-tap-event-plugin',
+            'material-ui',
             'lodash',
             'axios',
             'pouchdb-browser'
@@ -76,6 +73,7 @@ module.exports = {
             allChunks: true
         }),
         new webpack.optimize.OccurenceOrderPlugin(),
+        new webpack.optimize.DedupePlugin(),
         new webpack.DefinePlugin({
             'process.env': {
                 NODE_ENV: JSON.stringify('production')
@@ -95,6 +93,8 @@ module.exports = {
             maximumFileSizeToCacheInBytes: 10485760,
             directoryIndex: null,
             staticFileGlobs: [
+                "fonts/**.woff",
+                "fonts/**.woff2",
                 "/**.html",
                 "/**.txt",
                 "static/**.js",
@@ -105,8 +105,6 @@ module.exports = {
                 "static/fonts/**.eot",
                 "static/fonts/**.svg",
                 "static/fonts/**.ttf",
-                "static/fonts/**.woff",
-                "static/fonts/**.woff2",
                 "static/fonts/**.otf",
                 "static/img/**.png",
                 "static/img/icon/**.png"
@@ -120,27 +118,15 @@ module.exports = {
         // Deploy everything to template
         new HtmlWebpackPlugin({
             template: 'templates/index.tpl.html',
+            filename: path.resolve(__dirname, 'templates/') + '/index.html',
+            hash: true,
             inject: 'body',
-            filename: path.resolve(__dirname, 'templates/') + '/index.html'
+            chunks: ["commons", "app"]
         }),
         new webpack.optimize.CommonsChunkPlugin({
-            name: "vendor",
-            minChunks: Infinity
-        }),
-        new webpack.optimize.CommonsChunkPlugin({
-            name: "react-extras",
-            chunks: ['react-extras'],
-            minChunks: Infinity
-        }),
-        new webpack.optimize.CommonsChunkPlugin({
-            name: "redux-extras",
-            chunks: ['redux-extras'],
-            minChunks: Infinity
-        }),
-        new webpack.optimize.CommonsChunkPlugin({
-            name: "libraries",
-            chunks: ['libraries'],
-            minChunks: Infinity
+            name: "commons",
+            filename: './js/commons-[hash].js',
+            chunks: ["vendor", "app"]
         })
     ],
     // ESLint options
