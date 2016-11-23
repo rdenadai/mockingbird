@@ -5,4 +5,4 @@ from app import app as application
 # uwsgi --socket 0.0.0.0:8181 --protocol=http -w wsgi
 
 if __name__ == "__main__":
-    app.run()
+    application.run()

@@ -16,8 +16,6 @@ app.config['COMPRESS_LEVEL'] = 9
 # app.config['ASSETS_DEBUG'] = True
 
 
-
-
 @app.route("/")
 def index():
     return render_template('index.html')

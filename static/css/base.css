@@ -1,3 +1,12 @@
+html, body {
+    margin: 0px;
+    padding: 0px;
+    height: 100%;
+    min-height: 100%;
+    min-width: 100%;
+}
+
+
 .mocking-card-wide {
     width: 100%;
 }
@@ -58,4 +67,3 @@
       background: url('/static/img/cover.png') center / cover;
     }
 }
-

@@ -23,7 +23,7 @@ function isExternal(module) {
 
 module.exports = {
     entry: {
-        vendor: [
+        commons: [
             'react',
             'react-dom',
             'redux',
@@ -58,35 +58,88 @@ module.exports = {
                 exclude: /node_modules/,
                 loader: "babel-loader",
                 query: {
-                    presets: ['es2015', 'react']
+                    presets: ["es2015", "react", "stage-0"]
                 }
             },
             {
                 test: /\.css$/,
                 loader: ExtractTextPlugin.extract("style-loader", "css-loader")
+            },
+            {
+                test: /\.woff(\?v=\d+\.\d+\.\d+)?$/,
+                loader: "url",
+                query: {
+                    name: "fonts/fontawesome-webfont.[ext]",
+                    limit: 10000,
+                    mimetype: "application/font-woff"
+                }
+            },
+            {
+                test: /\.woff2(\?v=\d+\.\d+\.\d+)?$/,
+                loader: "url",
+                query: {
+                    name: "fonts/fontawesome-webfont.[ext]",
+                    limit: 10000,
+                    mimetype: "application/font-woff"
+                }
+            },
+            {
+                test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/,
+                loader: "url",
+                query: {
+                    name: "fonts/fontawesome-webfont.[ext]",
+                    limit: 10000,
+                    mimetype: "application/octet-stream"
+                }
+            },
+            {
+                test: /\.eot(\?v=\d+\.\d+\.\d+)?$/,
+                loader: "file",
+                query: {
+                    name: "fonts/fontawesome-webfont.[ext]"
+                }
+            },
+            {
+                test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
+                loader: "url",
+                query: {
+                    name: "fonts/fontawesome-webfont.[ext]",
+                    limit: 10000,
+                    mimetype: "image/svg+xml"
+                }
             }
         ]
     },
     plugins: [
         // Output extracted CSS to a file
-        new ExtractTextPlugin('css/[name].css', {
-            allChunks: true
-        }),
-        new webpack.optimize.OccurenceOrderPlugin(),
+        new ExtractTextPlugin('./css/style.css'),
         new webpack.optimize.DedupePlugin(),
         new webpack.DefinePlugin({
             'process.env': {
                 NODE_ENV: JSON.stringify('production')
             }
         }),
+        // Create a service worker
+        new webpack.optimize.CommonsChunkPlugin({
+            name: "commons",
+            filename: './js/commons.js',
+            chunks: ["commons", "app"]
+        }),
         // Uglify javascript
         new webpack.optimize.UglifyJsPlugin({
-            compressormo: {
+            comments: false,
+            compressor: {
                 warnings: false,
                 screw_ie8: true
             }
         }),
-        // Create a service worker
+        // Deploy everything to template
+        new HtmlWebpackPlugin({
+            template: 'templates/index.tpl.html',
+            filename: path.resolve(__dirname, 'templates/') + '/index.html',
+            inject: 'body',
+            chunks: ["commons", "app"]
+        }),
         new SWPrecacheWebpackPlugin({
             cacheId: 'mockingbird',
             filename: './sw.js',
@@ -94,14 +147,14 @@ module.exports = {
             directoryIndex: null,
             staticFileGlobs: [
                 "fonts/**.woff",
-                "fonts/**.woff2",
+                "fonts/**.woff2s",
                 "/**.html",
                 "/**.txt",
                 "static/**.js",
                 "static/**.txt",
                 "static/**.json",
                 "static/js/**.js",
-                "static/css/**.css",
+                "static/css/style.css",
                 "static/fonts/**.eot",
                 "static/fonts/**.svg",
                 "static/fonts/**.ttf",
@@ -114,19 +167,6 @@ module.exports = {
               urlPattern: /\/$/,
             }],
             verbose: true
-        }),
-        // Deploy everything to template
-        new HtmlWebpackPlugin({
-            template: 'templates/index.tpl.html',
-            filename: path.resolve(__dirname, 'templates/') + '/index.html',
-            hash: true,
-            inject: 'body',
-            chunks: ["commons", "app"]
-        }),
-        new webpack.optimize.CommonsChunkPlugin({
-            name: "commons",
-            filename: './js/commons-[hash].js',
-            chunks: ["vendor", "app"]
         })
     ],
     // ESLint options
