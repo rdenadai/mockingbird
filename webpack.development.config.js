@@ -31,7 +31,8 @@ module.exports = {
     },
     output: {
       path: path.resolve(__dirname, 'static/'),
-      filename: 'js/[name].js'
+      filename: 'js/[name].js',
+      publicPath: "/static/"
     },
     module: {
         preLoaders: [
@@ -45,7 +46,11 @@ module.exports = {
             {
                 test: /.js?$/,
                 exclude: /node_modules/,
-                loader: "babel-loader"
+                loader: "babel-loader",
+                query: {
+                    presets: ["es2015", "react", "stage-0"],
+                    plugins: ["react-hot-loader/babel"]
+                }
             },
             {
                 test: /\.css$/,
@@ -97,27 +102,14 @@ module.exports = {
         ]
     },
     plugins: [
+        new webpack.HotModuleReplacementPlugin(),
         // Output extracted CSS to a file
         new ExtractTextPlugin('./css/style.css'),
-        new webpack.optimize.DedupePlugin(),
-        new webpack.DefinePlugin({
-            'process.env': {
-                NODE_ENV: JSON.stringify('production')
-            }
-        }),
         // Create a service worker
         new webpack.optimize.CommonsChunkPlugin({
             name: "commons",
             filename: './js/commons.js',
             chunks: ["commons", "app"]
-        }),
-        // Uglify javascript
-        new webpack.optimize.UglifyJsPlugin({
-            comments: false,
-            compressor: {
-                warnings: false,
-                screw_ie8: true
-            }
         }),
         // Deploy everything to template
         new HtmlWebpackPlugin({
@@ -155,6 +147,14 @@ module.exports = {
             verbose: true
         })
     ],
+    devServer: {
+      contentBase: "./templates",
+      publicPath: "/static/",
+      compress: true,
+      hot: true,
+      stats: { colors: true }
+    },
+    devtool: "eval",
     // ESLint options
     eslint: {
         configFile: '.eslintrc',

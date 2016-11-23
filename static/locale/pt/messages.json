@@ -1,0 +1,6 @@
+{
+    "title": "Mockingbird",
+    "title_text": "Aplicativo de podcast, it's may porpuse is to show that is possible to write great apps using web technologies. Fell free to use at your own will!<br />In case you are interest, the full source code of this app is on github, <a href=\"https://github.com/rdenadai/mockingbird\" rel=\"noopener noreferrer\">check out</a>.<br /><br /><strong>You still don't have any podcasts registered...</strong> please click on the \"New Podcast\" button bellow or on the floating red button with a plus inside it!",
+
+    "btn_new_podcast_label": "Novo Podcast"
+}
