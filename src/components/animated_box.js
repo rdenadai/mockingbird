@@ -1,36 +1,53 @@
-import React, { Component, findDOMNode } from 'react';
-const Velocity = require('velocity-animate');
+import { css } from '../css';
+import React, { Component } from 'react';
+import { findDOMNode } from 'react-dom';
+import Velocity from 'velocity-animate';
+
 
 class AnimatedBox extends Component {
+    constructor(props) {
+        super(props);
+
+        this.state = { mounted: false };
+    }
+
+    componentWillMount() {
+
+    }
+
+    componentWillAppear(callback) {
+        // const el = findDOMNode(this);
+        callback();
+    }
+
     componentWillEnter(callback) {
+        // const el = findDOMNode(this);
+        callback();
+    }
+
+    componentDidEnter() {
         const el = findDOMNode(this);
-        console.log(el);
-        console.log(callback);
-        Velocity(el).velocity({ opacity: 1, visibility: 'visible' }, {
-            complete: function(elements) {
-                console.log(elements);
-            }
+        Velocity(el, { opacity: 1 }, { visibility: 'visible' }, 800)
+        .then((e) => {
+            console.log('animation complete ' + e);
+            this.setState({ mounted: true });
         });
-        // TweenMax.fromTo(el, 0.3, {y: 100, opacity: 0}, {y: 0, opacity: 1, onComplete: callback});
     }
 
     componentWillLeave(callback) {
         const el = findDOMNode(this);
-        console.log(el);
-        console.log(callback);
-        Velocity(el).velocity({ opacity: 0, visibility: 'hidden' }, {
-            complete: function(elements) {
-                console.log(elements);
-            }
+        Velocity(el, { opacity: 0 }, { visibility: 'hidden' }, { delay: 250, duration: 800 })
+        .then((e) => {
+            console.log('animation complete ' + e);
+            this.setState({ mounted: false });
+            callback();
         });
-        // TweenMax.fromTo(el, 0.3, {y: 0, opacity: 1}, {y: -100, opacity: 0, onComplete: callback});
     }
 
     render() {
-        const children = this.props.children;
-        console.log('here');
+        const children = !!this.props.children ? this.props.children : null;
         return (
-            <div key={this.props.id}>
+            <div className={css.baseCSS.animatedBox}>
                 {children}
             </div>
         );

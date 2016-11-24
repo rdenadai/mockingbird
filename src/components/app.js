@@ -3,6 +3,7 @@ import { css } from '../css';
 import React, { Component } from 'react';
 import ReactTransitionGroup from 'react-addons-transition-group';
 import { connect } from 'react-redux';
+import { Link } from 'react-router';
 
 import { blue500, blue800, pink500, pink800 } from 'material-ui/styles/colors';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
@@ -10,6 +11,12 @@ import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import AppBar from 'material-ui/AppBar';
 import Drawer from 'material-ui/Drawer';
 import MenuItem from 'material-ui/MenuItem';
+import FloatingActionButton from 'material-ui/FloatingActionButton';
+import ContentAdd from 'material-ui/svg-icons/content/add';
+
+import AnimatedBox from './animated_box';
+
+const uuid = require('uuid');
 
 
 const muiTheme = getMuiTheme({
@@ -34,7 +41,7 @@ class App extends Component {
     onTouchTapHandleDrawerToggle = () => this.setState({open: !this.state.open});
 
     render() {
-        const children = this.props.children;
+        const children = !!this.props.children ? this.props.children : null;
 
         return (
             <MuiThemeProvider muiTheme={muiTheme}>
@@ -51,10 +58,19 @@ class App extends Component {
                     </Drawer>
                     <div className={css.baseCSS.content}>
                         <div className={css.baseCSS.contentMargins}>
-                            <ReactTransitionGroup component="AnimatedBox">
-                                {children}
+                            <ReactTransitionGroup>
+                                <AnimatedBox key={uuid()}>
+                                    {children}
+                                </AnimatedBox>
                             </ReactTransitionGroup>
                         </div>
+                        <Link to="/app/add">
+                            <FloatingActionButton
+                                className={css.baseCSS.floatActionButton}
+                                secondary={true}>
+                                <ContentAdd />
+                            </FloatingActionButton>
+                        </Link>
                     </div>
                 </div>
             </MuiThemeProvider>

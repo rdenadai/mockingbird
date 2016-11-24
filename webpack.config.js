@@ -15,11 +15,11 @@ module.exports = {
         commons: [
             'react',
             'react-dom',
+            'react-addons-transition-group',
+            'react-addons-css-transition-group',
             'redux',
             'react-redux',
             'react-router',
-            'react-addons-transition-group',
-            'react-addons-css-transition-group',
             'redux-promise',
             'redux-thunk',
             'redux-form',
@@ -28,6 +28,7 @@ module.exports = {
             'lodash',
             'axios',
             'pouchdb-browser',
+            'uuid',
             'velocity-animate'
         ],
         app: ['./src/index.js']

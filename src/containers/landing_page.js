@@ -1,13 +1,9 @@
-import { css } from '../css';
 import React, { Component } from 'react';
 import { Link } from 'react-router';
 import { connect } from 'react-redux';
 import {Card, CardActions, CardMedia, CardTitle, CardText} from 'material-ui/Card';
 import FlatButton from 'material-ui/FlatButton';
-import FloatingActionButton from 'material-ui/FloatingActionButton';
-import ContentAdd from 'material-ui/svg-icons/content/add';
 
-import AnimatedBox from '../components/animated_box';
 
 class LandingPage extends Component {
     render() {
@@ -23,7 +19,7 @@ class LandingPage extends Component {
         const content = messages.title_text;
 
         return (
-            <AnimatedBox id="LandingPage">
+            <div key="LandingPage">
                 <Card>
                     <CardMedia>
                         <img src="/static/img/cover.png" />
@@ -38,14 +34,7 @@ class LandingPage extends Component {
                         </Link>
                     </CardActions>
                 </Card>
-                <Link to="/app/add">
-                    <FloatingActionButton
-                        className={css.baseCSS.floatActionButton}
-                        secondary={true}>
-                        <ContentAdd />
-                    </FloatingActionButton>
-                </Link>
-            </AnimatedBox>
+            </div>
         );
     }
 }
