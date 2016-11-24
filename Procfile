@@ -1,1 +1,1 @@
-web: uwsgi -w wsgi --processes 4 --threads 2
+web: uwsgi --ini wsgi.ini
