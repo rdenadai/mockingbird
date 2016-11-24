@@ -1,53 +1,62 @@
 import { css } from '../css';
 import React, { Component } from 'react';
+import { Link } from 'react-router';
 import { connect } from 'react-redux';
 import {Card, CardActions, CardMedia, CardTitle, CardText} from 'material-ui/Card';
 import FlatButton from 'material-ui/FlatButton';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import ContentAdd from 'material-ui/svg-icons/content/add';
 
+import AnimatedBox from '../components/animated_box';
 
 class LandingPage extends Component {
-
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            cardImg: '/static/img/cover.png'
-        };
-    }
-
     render() {
+        let messages = this.props.messages;
+        if(!(!!messages)) {
+            messages = {
+                'title': 'Mockingbird',
+                'title_text': 'Podcast App',
+                'btn_new_podcast_label': 'New Podcast'
+            };
+        }
+
+        const content = messages.title_text;
+
         return (
-            <div>
+            <AnimatedBox id="LandingPage">
                 <Card>
                     <CardMedia>
-                        <img src={this.state.cardImg} />
+                        <img src="/static/img/cover.png" />
                     </CardMedia>
-                    <CardTitle title="{this.props.messages.title}" />
-                    <CardText>{this.props.messages.title_text}</CardText>
+                    <CardTitle title={messages.title} />
+                    <CardText>
+                        <div dangerouslySetInnerHTML={{__html: content}} />
+                    </CardText>
                     <CardActions>
-                        <FlatButton label="{this.props.messages.btn_new_podcast_label}" />
+                        <Link to="/app/add">
+                            <FlatButton label={messages.btn_new_podcast_label} />
+                        </Link>
                     </CardActions>
                 </Card>
-                <FloatingActionButton
-                    href="/app/add"
-                    className={css.baseCSS.floatActionButton}
-                    secondary={true}>
-                    <ContentAdd />
-                </FloatingActionButton>
-            </div>
+                <Link to="/app/add">
+                    <FloatingActionButton
+                        className={css.baseCSS.floatActionButton}
+                        secondary={true}>
+                        <ContentAdd />
+                    </FloatingActionButton>
+                </Link>
+            </AnimatedBox>
         );
     }
 }
 
 LandingPage.propTypes = {
-    messages: React.PropTypes.object.isRequired
+    messages: React.PropTypes.object
 };
 
 // React-Redux integration...
 function mapStateToProps(state) {
-    return { messages: state.messages };
+    return { messages: state.messages.messages };
 }
 
 export default connect(mapStateToProps)(LandingPage);

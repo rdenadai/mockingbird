@@ -1,6 +1,7 @@
 import { css } from '../css';
 
 import React, { Component } from 'react';
+import ReactTransitionGroup from 'react-addons-transition-group';
 import { connect } from 'react-redux';
 
 import { blue500, blue800, pink500, pink800 } from 'material-ui/styles/colors';
@@ -9,8 +10,6 @@ import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import AppBar from 'material-ui/AppBar';
 import Drawer from 'material-ui/Drawer';
 import MenuItem from 'material-ui/MenuItem';
-
-import fetchMessages from '../actions/index';
 
 
 const muiTheme = getMuiTheme({
@@ -30,11 +29,6 @@ class App extends Component {
     constructor(props) {
         super(props);
         this.state = { open: false };
-    }
-
-    componentWillMount() {
-        console.log(this.props);
-        // this.props.fetchMessages();
     }
 
     onTouchTapHandleDrawerToggle = () => this.setState({open: !this.state.open});
@@ -57,7 +51,9 @@ class App extends Component {
                     </Drawer>
                     <div className={css.baseCSS.content}>
                         <div className={css.baseCSS.contentMargins}>
-                            {children}
+                            <ReactTransitionGroup component="AnimatedBox">
+                                {children}
+                            </ReactTransitionGroup>
                         </div>
                     </div>
                 </div>
@@ -68,13 +64,12 @@ class App extends Component {
 
 App.propTypes = {
     children: React.PropTypes.node,
-    messages: React.PropTypes.object,
-    fetchMessages: React.PropTypes.func
+    messages: React.PropTypes.object
 };
 
 
 function mapStateToProps(state) {
-    return { messages: state.messages };
+    return { messages: state.messages.messages };
 }
 
-export default connect(mapStateToProps, { fetchMessages })(App);
+export default connect(mapStateToProps)(App);

@@ -19,7 +19,7 @@ cache.init_app(app)
 # ------------------------------------------
 app.config['DEBUG'] = True
 app.config['COMPRESS_LEVEL'] = 9
-# app.config['ASSETS_DEBUG'] = True
+app.config['ASSETS_DEBUG'] = True
 
 
 @app.route('/')

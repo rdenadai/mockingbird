@@ -1,14 +1,10 @@
 import { FETCH_MESSAGES } from '../action_types';
 import axios from 'axios';
 
-export const fetchMessages = () => {
-    const request = axios.get('/messages');
+export function fetchMessages() {
     return (dispatch) => {
-        request.then(({data}) => {
-            dispatch({
-                type: FETCH_MESSAGES,
-                payload: data
-            });
+        axios.get('/messages').then(({data}) => {
+            dispatch({ type: FETCH_MESSAGES, payload: data });
         });
     };
-};
+}

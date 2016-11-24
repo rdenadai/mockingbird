@@ -1,0 +1,17 @@
+.simple-enter {
+    opacity: 0.01;
+}
+.simple-enter.simple-enter-active {
+    opacity: 1;
+    visibility: visible;
+    transition: opacity 600ms ease-in;
+}
+.simple-leave {
+    opacity: 1;
+}
+.simple-leave.simple-leave-active {
+    opacity: 0.01;
+    visibility: hidden;
+    transition: visibility 0s 1s, opacity 600ms ease-in;
+}
+/* eof */
