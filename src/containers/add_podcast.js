@@ -1,18 +1,32 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+
 import TextField from 'material-ui/TextField';
 
-export default class AddPodcast extends Component {
+class AddPodcast extends Component {
 
     render() {
+        const messages = this.props.messages;
         return (
             <div key="AddPodcastPage">
                 <div>
-                    Search for a podcast we have in our knowledge base or type in the url for one that you know.
+                    {messages.add_podcast_page_content}
                 </div>
                 <div>
-                    <TextField hintText="Hint Text" />
+                    <TextField hintText={messages.add_podcast_page_search_hint} />
                 </div>
             </div>
         );
     }
 }
+
+AddPodcast.propTypes = {
+    messages: React.PropTypes.object
+};
+
+// React-Redux integration...
+function mapStateToProps(state) {
+    return { messages: state.messages };
+}
+
+export default connect(mapStateToProps)(AddPodcast);

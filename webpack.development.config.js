@@ -29,7 +29,8 @@ module.exports = {
             'axios',
             'pouchdb-browser',
             'uuid',
-            'velocity-animate'
+            'velocity-animate',
+            'redux-pouchdb'
         ],
         app: ['./src/index.js']
     },

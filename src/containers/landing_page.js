@@ -45,7 +45,7 @@ LandingPage.propTypes = {
 
 // React-Redux integration...
 function mapStateToProps(state) {
-    return { messages: state.messages.messages };
+    return { messages: state.messages };
 }
 
 export default connect(mapStateToProps)(LandingPage);

@@ -82,7 +82,7 @@ App.propTypes = {
 
 
 function mapStateToProps(state) {
-    return { messages: state.messages.messages };
+    return { messages: state.messages };
 }
 
 export default connect(mapStateToProps)(App);
