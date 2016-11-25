@@ -25,9 +25,6 @@ const muiTheme = getMuiTheme({
         primary2Color: blue800,
         accent1Color: pink500,
         accent2Color: pink800
-    },
-    appBar: {
-        height: 50,
     }
 });
 

@@ -86,7 +86,7 @@
 /******/ 	}
 
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "474a352c4356db4eeec3"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "e8c310d44138ec452ab1"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 
@@ -609,7 +609,7 @@
 /******/ 			script.charset = 'utf-8';
 /******/ 			script.async = true;
 
-/******/ 			script.src = __webpack_require__.p + "" + chunkId + ".js/" + ({"0":"app"}[chunkId]||chunkId) + ".js";
+/******/ 			script.src = __webpack_require__.p + "" + chunkId + ".js/compile/" + ({"0":"app"}[chunkId]||chunkId) + "-" + hotCurrentHash + ".js";
 /******/ 			head.appendChild(script);
 /******/ 		}
 /******/ 	};

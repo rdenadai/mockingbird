@@ -11,6 +11,7 @@ const SWPrecacheWebpackPlugin = require('sw-precache-webpack-plugin');
 // To run the scripts use: npm run-script {dev | prod}
 
 module.exports = {
+    node: {fs: "empty"},
     entry: {
         commons: [
             'react',
@@ -35,7 +36,8 @@ module.exports = {
     },
     output: {
       path: path.resolve(__dirname, 'static/'),
-      filename: 'js/[name].js'
+      filename: 'js/compile/[name]-[hash].js',
+      publicPath: '/static/'
     },
     module: {
         preLoaders: [
@@ -102,7 +104,7 @@ module.exports = {
     },
     plugins: [
         // Output extracted CSS to a file
-        new ExtractTextPlugin('./css/style.css'),
+        new ExtractTextPlugin('./css/compile/[name]-[hash].css'),
         new webpack.optimize.DedupePlugin(),
         new webpack.DefinePlugin({
             'process.env': {
@@ -112,7 +114,7 @@ module.exports = {
         // Create a service worker
         new webpack.optimize.CommonsChunkPlugin({
             name: "commons",
-            filename: './js/commons.js',
+            filename: './js/compile/[name]-[hash].js',
             chunks: ["commons", "app"]
         }),
         // Uglify javascript
@@ -136,15 +138,15 @@ module.exports = {
             maximumFileSizeToCacheInBytes: 10485760,
             directoryIndex: null,
             staticFileGlobs: [
-                "fonts/**.woff",
-                "fonts/**.woff2s",
                 "/**.html",
                 "/**.txt",
                 "static/**.js",
                 "static/**.txt",
                 "static/**.json",
-                "static/js/**.js",
-                "static/css/style.css",
+                "static/js/compile/**.js",
+                "static/css/compile/**.css",
+                "static/fonts/**.woff",
+                "static/fonts/**.woff2",
                 "static/fonts/**.eot",
                 "static/fonts/**.svg",
                 "static/fonts/**.ttf",

@@ -21,9 +21,9 @@ html, body {
 }
 
 .floatActionButton {
-    position: absolute;
-    right: 24px;
-    bottom: 24px;
+    position: fixed;
+    right: 16px;
+    bottom: 16px;
 }
 
 .animatedBox {
