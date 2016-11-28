@@ -28,8 +28,7 @@ class AnimatedBox extends Component {
     componentDidEnter() {
         const el = findDOMNode(this);
         Velocity(el, { opacity: 1 }, { visibility: 'visible' }, 800)
-        .then((e) => {
-            console.log('animation complete ' + e);
+        .then(() => {
             this.setState({ mounted: true });
         });
     }
@@ -37,8 +36,7 @@ class AnimatedBox extends Component {
     componentWillLeave(callback) {
         const el = findDOMNode(this);
         Velocity(el, { opacity: 0 }, { visibility: 'hidden' }, { delay: 250, duration: 800 })
-        .then((e) => {
-            console.log('animation complete ' + e);
+        .then(() => {
             this.setState({ mounted: false });
             callback();
         });

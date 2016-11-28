@@ -13,6 +13,7 @@ import Drawer from 'material-ui/Drawer';
 import MenuItem from 'material-ui/MenuItem';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import ContentAdd from 'material-ui/svg-icons/content/add';
+import Snackbar from 'material-ui/Snackbar';
 
 import AnimatedBox from './animated_box';
 
@@ -32,13 +33,41 @@ class App extends Component {
 
     constructor(props) {
         super(props);
-        this.state = { open: false };
+        this.state = {
+            connectionState: false,
+            open: false
+        };
+    }
+
+    componentDidMount() {
+        window.addEventListener('online', () => {
+            // re-sync data with server
+            this.setState({ connectionState: true });
+        }, false);
+
+        window.addEventListener('offline', () => {
+            // queue up events for server
+            this.setState({ connectionState: true });
+        }, false);
     }
 
     onTouchTapHandleDrawerToggle = () => this.setState({open: !this.state.open});
 
     render() {
         const children = !!this.props.children ? this.props.children : null;
+        let connectionState = this.state.connectionState;
+        let connectionText = '';
+
+        if(!!this.props.messages) {
+            // check if the user is connected
+            if(navigator.onLine) {
+                connectionState = true;
+                connectionText = this.props.messages.online;
+            } else { // show offline message
+                connectionState = true;
+                connectionText = this.props.messages.offline;
+            }
+        }
 
         return (
             <MuiThemeProvider muiTheme={muiTheme}>
@@ -69,6 +98,11 @@ class App extends Component {
                             </FloatingActionButton>
                         </Link>
                     </div>
+                    <Snackbar
+                        open={connectionState}
+                        message={connectionText}
+                        autoHideDuration={2500}
+                    />
                 </div>
             </MuiThemeProvider>
         );

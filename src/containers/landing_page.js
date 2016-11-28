@@ -7,35 +7,30 @@ import FlatButton from 'material-ui/FlatButton';
 
 class LandingPage extends Component {
     render() {
-        let messages = this.props.messages;
-        if(!(!!messages)) {
-            messages = {
-                'title': 'Mockingbird',
-                'title_text': 'Podcast App',
-                'btn_new_podcast_label': 'New Podcast'
-            };
+        const messages = this.props.messages;
+        if(!!messages) {
+            const content = messages.title_text;
+
+            return (
+                <div key="LandingPage">
+                    <Card>
+                        <CardMedia>
+                            <img src="/static/img/cover.png" />
+                        </CardMedia>
+                        <CardTitle title={messages.title} />
+                        <CardText>
+                            <div dangerouslySetInnerHTML={{__html: content}} />
+                        </CardText>
+                        <CardActions>
+                            <Link to="/app/add">
+                                <FlatButton label={messages.btn_new_podcast_label} />
+                            </Link>
+                        </CardActions>
+                    </Card>
+                </div>
+            );
         }
-
-        const content = messages.title_text;
-
-        return (
-            <div key="LandingPage">
-                <Card>
-                    <CardMedia>
-                        <img src="/static/img/cover.png" />
-                    </CardMedia>
-                    <CardTitle title={messages.title} />
-                    <CardText>
-                        <div dangerouslySetInnerHTML={{__html: content}} />
-                    </CardText>
-                    <CardActions>
-                        <Link to="/app/add">
-                            <FlatButton label={messages.btn_new_podcast_label} />
-                        </Link>
-                    </CardActions>
-                </Card>
-            </div>
-        );
+        return <div />;
     }
 }
 

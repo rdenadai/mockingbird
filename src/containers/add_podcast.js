@@ -7,16 +7,21 @@ class AddPodcast extends Component {
 
     render() {
         const messages = this.props.messages;
-        return (
-            <div key="AddPodcastPage">
-                <div>
-                    {messages.add_podcast_page_content}
+        if(!!messages) {
+            return (
+                <div key="AddPodcastPage">
+                    <div>
+                        {messages.add_podcast_page_content}
+                    </div>
+                    <div>
+                        <TextField
+                            key="textfieldSearchPodcast"
+                            hintText={messages.add_podcast_page_search_hint} />
+                    </div>
                 </div>
-                <div>
-                    <TextField hintText={messages.add_podcast_page_search_hint} />
-                </div>
-            </div>
-        );
+            );
+        }
+        return <div />;
     }
 }
 

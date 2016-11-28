@@ -31,9 +31,10 @@ module.exports = {
             'pouchdb-browser',
             'uuid',
             'velocity-animate',
-            'redux-pouchdb'
+            'redux-pouchdb',
+            'moment'
         ],
-        app: ['./src/index.js']
+        app: ['babel-polyfill', './src/index.js']
     },
     output: {
       path: path.resolve(__dirname, 'static/'),

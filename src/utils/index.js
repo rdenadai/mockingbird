@@ -13,3 +13,5 @@ export const compose = (...funcs) => {
         }, value);
     };
 };
+
+export const dateFormat = 'YYYY-MM-DD HH:mm:ss';

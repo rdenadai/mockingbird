@@ -1,8 +1,6 @@
 const init = (event) => {
     'use strict';
 
-    console.log(event);
-
     /**
      * Copyright 2015 Google Inc. All rights reserved.
      *
@@ -60,24 +58,6 @@ const init = (event) => {
         });
     }
 
-
-    window.addEventListener('online', (e) => {
-        // re-sync data with server
-        console.log('You are online! :D', e);
-    }, false);
-
-    window.addEventListener('offline', (e) => {
-        // queue up events for server
-        console.log('You are offline... :(', e);
-    }, false);
-
-    // check if the user is connected
-//    if (navigator.onLine) {
-//        actions.showDefaultSnackBar("You are online");
-//    } else {
-//        // show offline message
-//        actions.showDefaultSnackBar("You are offline");
-//    }
 };
 
 document.addEventListener('DOMContentLoaded', (event) => {
