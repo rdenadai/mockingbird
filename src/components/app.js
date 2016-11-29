@@ -13,8 +13,8 @@ import Drawer from 'material-ui/Drawer';
 import MenuItem from 'material-ui/MenuItem';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import ContentAdd from 'material-ui/svg-icons/content/add';
-import Snackbar from 'material-ui/Snackbar';
 
+import SnackBarAlert from './snackbar_alert';
 import AnimatedBox from './animated_box';
 
 const uuid = require('uuid');
@@ -33,41 +33,30 @@ class App extends Component {
 
     constructor(props) {
         super(props);
-        this.state = {
-            connectionState: false,
-            open: false
-        };
-    }
-
-    componentDidMount() {
-        window.addEventListener('online', () => {
-            // re-sync data with server
-            this.setState({ connectionState: true });
-        }, false);
-
-        window.addEventListener('offline', () => {
-            // queue up events for server
-            this.setState({ connectionState: true });
-        }, false);
+        this.state = { open: false };
     }
 
     onTouchTapHandleDrawerToggle = () => this.setState({open: !this.state.open});
 
+    addNewPodcastButton = () => {
+        const verdade = true;
+
+        if(this.context.router.location.pathname === '/') {
+            return  (
+                <Link to="/app/add">
+                    <FloatingActionButton
+                        className={css.baseCSS.floatActionButton}
+                        secondary={verdade}>
+                        <ContentAdd />
+                    </FloatingActionButton>
+                </Link>
+            );
+        }
+        return null;
+    }
+
     render() {
         const children = !!this.props.children ? this.props.children : null;
-        let connectionState = this.state.connectionState;
-        let connectionText = '';
-
-        if(!!this.props.messages) {
-            // check if the user is connected
-            if(navigator.onLine) {
-                connectionState = true;
-                connectionText = this.props.messages.online;
-            } else { // show offline message
-                connectionState = true;
-                connectionText = this.props.messages.offline;
-            }
-        }
 
         return (
             <MuiThemeProvider muiTheme={muiTheme}>
@@ -90,19 +79,9 @@ class App extends Component {
                                 </AnimatedBox>
                             </ReactTransitionGroup>
                         </div>
-                        <Link to="/app/add">
-                            <FloatingActionButton
-                                className={css.baseCSS.floatActionButton}
-                                secondary={true}>
-                                <ContentAdd />
-                            </FloatingActionButton>
-                        </Link>
                     </div>
-                    <Snackbar
-                        open={connectionState}
-                        message={connectionText}
-                        autoHideDuration={2500}
-                    />
+                    <SnackBarAlert />
+                    {this.addNewPodcastButton()}
                 </div>
             </MuiThemeProvider>
         );
@@ -114,6 +93,9 @@ App.propTypes = {
     messages: React.PropTypes.object
 };
 
+App.contextTypes = {
+    router: React.PropTypes.object.isRequired
+};
 
 function mapStateToProps(state) {
     return { messages: state.messages };

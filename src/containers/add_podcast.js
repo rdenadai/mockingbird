@@ -16,7 +16,9 @@ class AddPodcast extends Component {
                     <div>
                         <TextField
                             key="textfieldSearchPodcast"
-                            hintText={messages.add_podcast_page_search_hint} />
+                            hintText=""
+                            floatingLabelText={messages.add_podcast_page_search_hint}
+                            fullWidth={true} />
                     </div>
                 </div>
             );

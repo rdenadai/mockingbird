@@ -1,4 +1,7 @@
 const PouchDB = require('pouchdb-browser');
+
+export const dateFormat = 'YYYY-MM-DD HH:mm:ss';
+
 export const db = new PouchDB('mockingbird');
 
 // Declare a function, take functions as arguments
@@ -13,5 +16,3 @@ export const compose = (...funcs) => {
         }, value);
     };
 };
-
-export const dateFormat = 'YYYY-MM-DD HH:mm:ss';

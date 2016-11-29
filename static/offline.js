@@ -57,7 +57,6 @@ const init = (event) => {
             console.error('Error during service worker registration:', e);
         });
     }
-
 };
 
 document.addEventListener('DOMContentLoaded', (event) => {

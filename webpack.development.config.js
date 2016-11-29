@@ -37,7 +37,7 @@ module.exports = {
     },
     output: {
       path: path.resolve(__dirname, 'static/'),
-      filename: 'js/compile/[name]-[hash].js',
+      filename: 'js/compile/[name].js',
       publicPath: "/static/"
     },
     module: {
@@ -54,7 +54,6 @@ module.exports = {
                 exclude: /node_modules/,
                 loader: "babel-loader",
                 query: {
-                    presets: ["es2015", "react", "stage-0"],
                     plugins: ["react-hot-loader/babel"]
                 }
             },
@@ -108,13 +107,12 @@ module.exports = {
         ]
     },
     plugins: [
-        new webpack.HotModuleReplacementPlugin(),
         // Output extracted CSS to a file
-        new ExtractTextPlugin('./css/compile/[name]-[hash].css'),
+        new ExtractTextPlugin('./css/compile/[name].css'),
         // Create a service worker
         new webpack.optimize.CommonsChunkPlugin({
             name: "commons",
-            filename: './js/compile/[name]-[hash].js',
+            filename: './js/compile/[name].js',
             chunks: ["commons", "app"]
         }),
         // Deploy everything to template
