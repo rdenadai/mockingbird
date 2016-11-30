@@ -38,7 +38,8 @@ def catch_all(path):
 
 @app.route("/messages")
 def messages():
-    response = send_from_directory(app.static_folder, "locale/en/messages.json")
+    language = request.args.get('language')
+    response = send_from_directory(app.static_folder, "locale/%s/messages.json" % (language))
     response.mimetype = 'application/json'
     return response
 

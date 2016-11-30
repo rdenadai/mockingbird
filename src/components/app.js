@@ -8,15 +8,12 @@ import { Link } from 'react-router';
 import { blue500, blue800, pink500, pink800 } from 'material-ui/styles/colors';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
-import AppBar from 'material-ui/AppBar';
-import Drawer from 'material-ui/Drawer';
-import MenuItem from 'material-ui/MenuItem';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import ContentAdd from 'material-ui/svg-icons/content/add';
 
+import AppDrawer from './drawer';
 import SnackBarAlert from './snackbar_alert';
 import AnimatedBox from './animated_box';
-import LandingPage from '../containers/landing_page';
 
 
 const uuid = require('uuid');
@@ -35,11 +32,7 @@ class App extends Component {
 
     constructor(props) {
         super(props);
-
-        this.state = { open: false };
     }
-
-    onTouchTapHandleDrawerToggle = () => this.setState({open: !this.state.open});
 
     addNewPodcastButton = () => {
         const verdade = true;
@@ -60,36 +53,29 @@ class App extends Component {
 
     render() {
         const messages = this.props.messages;
-        const children = !!this.props.children ? this.props.children : <LandingPage />;
+        const children = !!this.props.children ? this.props.children : null;
 
-        return (
-            <MuiThemeProvider muiTheme={muiTheme}>
-                <div>
-                    <AppBar
-                        title={messages.title}
-                        onLeftIconButtonTouchTap={this.onTouchTapHandleDrawerToggle.bind(this)} />
-                    <Drawer
-                        docked={false}
-                        open={this.state.open}
-                        onRequestChange={(open) => this.setState({open})}>
-                        <AppBar title={messages.title} />
-                        <MenuItem>{messages.menu_home}</MenuItem>
-                        <MenuItem>{messages.menu_add_podcast}</MenuItem>
-                    </Drawer>
-                    <div className={css.baseCSS.content}>
-                        <div className={css.baseCSS.contentMargins}>
-                            <ReactTransitionGroup>
-                                <AnimatedBox key={uuid()}>
-                                    {children}
-                                </AnimatedBox>
-                            </ReactTransitionGroup>
+        if(!!messages) {
+            return (
+                <MuiThemeProvider muiTheme={muiTheme}>
+                    <div>
+                        <AppDrawer />
+                        <div className={css.baseCSS.content}>
+                            <div className={css.baseCSS.contentMargins}>
+                                <ReactTransitionGroup>
+                                    <AnimatedBox key={uuid()}>
+                                        {children}
+                                    </AnimatedBox>
+                                </ReactTransitionGroup>
+                            </div>
                         </div>
+                        <SnackBarAlert />
+                        {this.addNewPodcastButton()}
                     </div>
-                    <SnackBarAlert />
-                    {this.addNewPodcastButton()}
-                </div>
-            </MuiThemeProvider>
-        );
+                </MuiThemeProvider>
+            );
+        }
+        return <div />;
     }
 }
 

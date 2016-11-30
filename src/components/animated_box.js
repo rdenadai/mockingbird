@@ -3,6 +3,8 @@ import React, { Component } from 'react';
 import { findDOMNode } from 'react-dom';
 import Velocity from 'velocity-animate';
 
+// const uuid = require('uuid');
+
 
 class AnimatedBox extends Component {
     constructor(props) {
@@ -12,12 +14,17 @@ class AnimatedBox extends Component {
     }
 
     componentWillMount() {
-
+        // silence
     }
 
     componentWillAppear(callback) {
         // const el = findDOMNode(this);
-        callback();
+        const el = findDOMNode(this);
+        Velocity(el, { opacity: 1 }, { visibility: 'visible' }, 800)
+        .then(() => {
+            this.setState({ mounted: true });
+            callback();
+        });
     }
 
     componentWillEnter(callback) {

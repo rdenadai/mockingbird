@@ -13,29 +13,26 @@ class LandingPage extends Component {
 
     render() {
         const messages = this.props.messages;
-        if(!!messages) {
-            const content = messages.title_text;
+        const content = messages.title_text;
 
-            return (
-                <div key="LandingPage">
-                    <Card>
-                        <CardMedia>
-                            <img src="/static/img/cover.png" />
-                        </CardMedia>
-                        <CardTitle title={messages.title} />
-                        <CardText>
-                            <div dangerouslySetInnerHTML={{__html: content}} />
-                        </CardText>
-                        <CardActions>
-                            <Link to="/app/add">
-                                <FlatButton label={messages.btn_new_podcast_label} />
-                            </Link>
-                        </CardActions>
-                    </Card>
-                </div>
-            );
-        }
-        return <div />;
+        return (
+            <div>
+                <Card>
+                    <CardMedia>
+                        <img src="/static/img/cover.png" />
+                    </CardMedia>
+                    <CardTitle title={messages.title} />
+                    <CardText>
+                        <div style={{textAlign: 'justify'}} dangerouslySetInnerHTML={{__html: content}} />
+                    </CardText>
+                    <CardActions>
+                        <Link to="/app/add">
+                            <FlatButton label={messages.btn_new_podcast_label} />
+                        </Link>
+                    </CardActions>
+                </Card>
+            </div>
+        );
     }
 }
 

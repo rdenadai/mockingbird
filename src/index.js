@@ -15,7 +15,7 @@ import injectTapEventPlugin from 'react-tap-event-plugin';
 import { db, compose } from './utils';
 import routes from './routes';
 import reducers from './reducers';
-import { fetchMessages } from './actions';
+import { fetchMessages, fetchConfiguration } from './actions';
 
 // Needed for onTouchTap
 // http://stackoverflow.com/a/34015469/988941
@@ -26,6 +26,7 @@ const createStoreWithMiddleware = compose(
     persistentStore(db)
 )(createStore);
 const store = createStoreWithMiddleware(reducers);
+store.dispatch(fetchConfiguration());
 store.dispatch(fetchMessages());
 
 render(
