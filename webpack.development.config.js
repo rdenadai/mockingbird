@@ -33,11 +33,17 @@ module.exports = {
             'redux-pouchdb',
             'moment'
         ],
-        app: ['babel-polyfill', './src/index.js']
+        app: [
+            // 'react-hot-loader/patch',
+            // 'webpack-dev-server/client?http://0.0.0.0:8282', // WebpackDevServer host and port
+            // 'webpack/hot/only-dev-server', // "only" prevents reload on syntax errors
+            'babel-polyfill',
+            './src/index.js'
+        ]
     },
     output: {
       path: path.resolve(__dirname, 'static/'),
-      filename: 'js/compile/[name].js',
+      filename: 'dist/js/[name].js',
       publicPath: "/static/"
     },
     module: {
@@ -107,12 +113,13 @@ module.exports = {
         ]
     },
     plugins: [
+        // new webpack.HotModuleReplacementPlugin(),
         // Output extracted CSS to a file
-        new ExtractTextPlugin('./css/compile/[name].css'),
+        new ExtractTextPlugin('./dist/css/[name].css'),
         // Create a service worker
         new webpack.optimize.CommonsChunkPlugin({
             name: "commons",
-            filename: './js/compile/[name].js',
+            filename: './dist/js/[name].js',
             chunks: ["commons", "app"]
         }),
         // Deploy everything to template
@@ -122,43 +129,19 @@ module.exports = {
             inject: 'body',
             chunks: ["commons", "app"]
         }),
-        new SWPrecacheWebpackPlugin({
-            cacheId: 'mockingbird',
-            filename: './sw.js',
-            maximumFileSizeToCacheInBytes: 10485760,
-            directoryIndex: null,
-            staticFileGlobs: [
-                "/**.html",
-                "/**.txt",
-                "static/**.js",
-                "static/**.txt",
-                "static/**.json",
-                "static/js/compile/**.js",
-                "static/css/compile/**.css",
-                "static/fonts/**.woff",
-                "static/fonts/**.woff2",
-                "static/fonts/**.eot",
-                "static/fonts/**.svg",
-                "static/fonts/**.ttf",
-                "static/fonts/**.otf",
-                "static/img/**.png",
-                "static/img/icon/**.png"
-            ],
-            runtimeCaching: [{
-              handler: 'cacheFirst',
-              urlPattern: /\/$/,
-            }],
-            verbose: true
-        })
     ],
     devServer: {
-      contentBase: "./templates",
+      contentBase: "./src",
+      devtool: 'eval',
       publicPath: "/static/",
-      compress: true,
-      hot: true,
+      compress: false,
+      hot: true, // Live-reload
+      port: 8282, // Port Number
+      host: '0.0.0.0', // Change to '0.0.0.0' for external facing server
+      inline: true,
       stats: { colors: true }
     },
-    devtool: "eval",
+    devtool: 'eval',
     // ESLint options
     eslint: {
         configFile: '.eslintrc',

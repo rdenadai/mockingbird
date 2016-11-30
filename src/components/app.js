@@ -16,6 +16,8 @@ import ContentAdd from 'material-ui/svg-icons/content/add';
 
 import SnackBarAlert from './snackbar_alert';
 import AnimatedBox from './animated_box';
+import LandingPage from '../containers/landing_page';
+
 
 const uuid = require('uuid');
 
@@ -33,6 +35,7 @@ class App extends Component {
 
     constructor(props) {
         super(props);
+
         this.state = { open: false };
     }
 
@@ -56,20 +59,22 @@ class App extends Component {
     }
 
     render() {
-        const children = !!this.props.children ? this.props.children : null;
+        const messages = this.props.messages;
+        const children = !!this.props.children ? this.props.children : <LandingPage />;
 
         return (
             <MuiThemeProvider muiTheme={muiTheme}>
                 <div>
                     <AppBar
-                        title="Mockingbird"
+                        title={messages.title}
                         onLeftIconButtonTouchTap={this.onTouchTapHandleDrawerToggle.bind(this)} />
                     <Drawer
                         docked={false}
                         open={this.state.open}
                         onRequestChange={(open) => this.setState({open})}>
-                        <MenuItem>Menu Item</MenuItem>
-                        <MenuItem>Menu Item 2</MenuItem>
+                        <AppBar title={messages.title} />
+                        <MenuItem>{messages.menu_home}</MenuItem>
+                        <MenuItem>{messages.menu_add_podcast}</MenuItem>
                     </Drawer>
                     <div className={css.baseCSS.content}>
                         <div className={css.baseCSS.contentMargins}>

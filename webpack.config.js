@@ -38,7 +38,7 @@ module.exports = {
     },
     output: {
       path: path.resolve(__dirname, 'static/'),
-      filename: 'js/compile/[name]-[hash].js',
+      filename: 'dist/js/[name]-[hash].js',
       publicPath: '/static/'
     },
     module: {
@@ -106,7 +106,7 @@ module.exports = {
     },
     plugins: [
         // Output extracted CSS to a file
-        new ExtractTextPlugin('./css/compile/[name]-[hash].css'),
+        new ExtractTextPlugin('./dist/css/[name]-[hash].css'),
         new webpack.optimize.DedupePlugin(),
         new webpack.DefinePlugin({
             'process.env': {
@@ -116,7 +116,7 @@ module.exports = {
         // Create a service worker
         new webpack.optimize.CommonsChunkPlugin({
             name: "commons",
-            filename: './js/compile/[name]-[hash].js',
+            filename: './dist/js/[name]-[hash].js',
             chunks: ["commons", "app"]
         }),
         // Uglify javascript
@@ -145,8 +145,8 @@ module.exports = {
                 "static/**.js",
                 "static/**.txt",
                 "static/**.json",
-                "static/js/compile/**.js",
-                "static/css/compile/**.css",
+                "static/dist/js/**.js",
+                "static/dist/css/**.css",
                 "static/fonts/**.woff",
                 "static/fonts/**.woff2",
                 "static/fonts/**.eot",

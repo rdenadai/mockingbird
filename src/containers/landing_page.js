@@ -6,6 +6,7 @@ import {Card, CardActions, CardMedia, CardTitle, CardText} from 'material-ui/Car
 import FlatButton from 'material-ui/FlatButton';
 
 class LandingPage extends Component {
+
     constructor(props) {
         super(props);
     }
