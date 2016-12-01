@@ -14,14 +14,38 @@
         <!--[if IE]>
             <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" rel="stylesheet">
         <![endif]-->
-    <link href="/static/./dist/css/app.css" rel="stylesheet"></head>
+        <style>
+            .loading {
+                position: fixed;
+                bottom: 7px;
+                right: 7px;
+                font-size: 1.25em;
+                color: #555;
+                font-weight: bold;
+            }
+            .no-script {
+                position: fixed;
+                top: 10%;
+                text-align: justify;
+                font-size: 1.25em;
+                margin: 20px;
+            }
+        </style>
+    <link href="/static/./ds/css/app.css" rel="stylesheet"></head>
     <body>
         <!--[if !IE]> -->
             <style>
                 @import url('https://fonts.googleapis.com/css?family=Roboto:300,400,500');
             </style>
         <!-- <![endif]-->
-    	<div id="content"></div>
+    	<div id="content">
+            <div class="loading">Loading...</div>
+        </div>
+        <noscript>
+            <div class="no-script">
+                Your browser doesn't support JavaScript or you have disabled JavaScript. Please enable javascript to fully enjoy this app :) ...
+            </div>
+        </noscript>
         <script type="text/javascript" src="../static/offline.js" async="true"></script>
-    <script type="text/javascript" src="/static/./dist/js/commons.js"></script><script type="text/javascript" src="/static/dist/js/app.js"></script></body>
+    <script type="text/javascript" src="/static/./ds/js/commons.js"></script><script type="text/javascript" src="/static/ds/js/app.js"></script></body>
 </html>

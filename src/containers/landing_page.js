@@ -19,7 +19,7 @@ class LandingPage extends Component {
             <div>
                 <Card>
                     <CardMedia>
-                        <img src="/static/img/cover.png" />
+                        <img src="/static/img/cover.png" alt="Cover" />
                     </CardMedia>
                     <CardTitle title={messages.title} />
                     <CardText>

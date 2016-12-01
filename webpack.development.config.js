@@ -43,7 +43,7 @@ module.exports = {
     },
     output: {
       path: path.resolve(__dirname, 'static/'),
-      filename: 'dist/js/[name].js',
+      filename: 'ds/js/[name].js',
       publicPath: "/static/"
     },
     module: {
@@ -115,11 +115,11 @@ module.exports = {
     plugins: [
         // new webpack.HotModuleReplacementPlugin(),
         // Output extracted CSS to a file
-        new ExtractTextPlugin('./dist/css/[name].css'),
+        new ExtractTextPlugin('./ds/css/[name].css'),
         // Create a service worker
         new webpack.optimize.CommonsChunkPlugin({
             name: "commons",
-            filename: './dist/js/[name].js',
+            filename: './ds/js/[name].js',
             chunks: ["commons", "app"]
         }),
         // Deploy everything to template

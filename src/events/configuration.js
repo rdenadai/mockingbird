@@ -43,7 +43,6 @@ export async function saveConfiguration(content) {
         document = await db.get(document.id);
     } catch(exception) {
         // silence
-        console.log(exception);
     }
     return document;
 }

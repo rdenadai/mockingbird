@@ -44,7 +44,7 @@ export async function saveMessages(content) {
             document.updated_at = moment().format(dateFormat);
         } else {
             document = {
-                _id: 'configuration',
+                _id: 'messages',
                 revision: content.revision,
                 data: content.data,
                 updated_at: moment().format(dateFormat)
@@ -54,7 +54,6 @@ export async function saveMessages(content) {
         document = await db.get(document.id);
     } catch(exception) {
         // silence
-        console.log(exception);
     }
     return document;
 }

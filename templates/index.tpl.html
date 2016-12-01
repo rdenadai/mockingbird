@@ -14,6 +14,23 @@
         <!--[if IE]>
             <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" rel="stylesheet">
         <![endif]-->
+        <style>
+            .loading {
+                position: fixed;
+                bottom: 7px;
+                right: 7px;
+                font-size: 1.25em;
+                color: #555;
+                font-weight: bold;
+            }
+            .no-script {
+                position: fixed;
+                top: 10%;
+                text-align: justify;
+                font-size: 1.25em;
+                margin: 20px;
+            }
+        </style>
     </head>
     <body>
         <!--[if !IE]> -->
@@ -21,7 +38,14 @@
                 @import url('https://fonts.googleapis.com/css?family=Roboto:300,400,500');
             </style>
         <!-- <![endif]-->
-    	<div id="content"></div>
+    	<div id="content">
+            <div class="loading">Loading...</div>
+        </div>
+        <noscript>
+            <div class="no-script">
+                Your browser doesn't support JavaScript or you have disabled JavaScript. Please enable javascript to fully enjoy this app :) ...
+            </div>
+        </noscript>
         <script type="text/javascript" src="../static/offline.js" async="true"></script>
     </body>
 </html>
