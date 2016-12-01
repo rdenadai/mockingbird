@@ -1,8 +1,16 @@
-from flask import Flask, redirect, request, send_from_directory
+# -*- coding: utf-8 -*-
+
+from flask import Flask
+from flask import redirect, request, Response, send_from_directory
+import ujson
+from flask import render_template
+
 from flask_compress import Compress
 from flask_caching import Cache
-from flask import render_template
+
 from werkzeug.exceptions import abort
+from werkzeug.datastructures import Headers
+
 
 # Flask-Compress
 compress = Compress()
@@ -42,6 +50,16 @@ def messages():
     response = send_from_directory(app.static_folder, "locale/%s/messages.json" % (language))
     response.mimetype = 'application/json'
     return response
+
+
+@app.route("/search/<term>")
+def search(term):
+    data = ujson.dumps({ "abc": True })
+    headers = Headers()
+    headers['Content-Encoding'] = 'gzip'
+    response = Response(response=data, status=200, headers=headers, mimetype="application/json")
+    return response
+
 
 
 @app.route('/robots.txt')
