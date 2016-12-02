@@ -6,3 +6,4 @@ jsmin==2.2.1
 cssmin==0.2.0
 uwsgi==2.0.14
 ujson==1.35
+requests==2.12.3
