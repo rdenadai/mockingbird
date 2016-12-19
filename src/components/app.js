@@ -18,7 +18,6 @@ import AnimatedBox from './animated_box';
 
 const uuid = require('uuid');
 
-
 const muiTheme = getMuiTheme({
     palette: {
         primary1Color: blue500,

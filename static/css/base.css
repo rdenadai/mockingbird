@@ -36,3 +36,12 @@ html, body {
     visibility: hidden;
     background-color: #fff;
 }
+
+@media only screen and (min-width: 900px) {
+    .contentMargins {
+        position: relative;
+        max-width: 900px;
+        height: 100%;
+        margin: 10px auto;
+    }
+}
