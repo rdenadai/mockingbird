@@ -2,20 +2,15 @@ import { css } from '../css';
 
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router';
 
 import Divider from 'material-ui/Divider';
+import Paper from 'material-ui/Paper';
 import AutoComplete from 'material-ui/AutoComplete';
-import RaisedButton from 'material-ui/RaisedButton';
+import IconButton from 'material-ui/IconButton';
 
 
 const center = {
     textAlign: 'center'
-};
-
-const middle = {
-    textAlign: 'center',
-    paddingTop: 25
 };
 
 const minHeightStyle = {
@@ -27,6 +22,8 @@ const icons = {
     add_podcast: `${css.fontAwesome.fa} ${css.fontAwesome['fa-plus-square']}`,
 };
 
+const firstColumn = css.flexBoxGrid['col-xs-10'] + ' ' + css.flexBoxGrid['col-sm-9'] + ' ' + css.flexBoxGrid['col-md-9'] + ' ' + css.flexBoxGrid['col-lg-11'];
+const secondColumn = css.flexBoxGrid['col-xs-2'] + ' ' + css.flexBoxGrid['col-sm-3'] + ' ' + css.flexBoxGrid['col-md-3'] + ' ' + css.flexBoxGrid['col-lg-1'];
 
 class AddPodcast extends Component {
 
@@ -40,11 +37,17 @@ class AddPodcast extends Component {
 
     handleUpdateInput = (value) => {
         this.setState({
+            searchTerm: value,
             dataSource: [
                 value,
                 value + '_' + value,
             ],
         });
+    }
+
+    handleClickSearch = (evt) => {
+        console.log(evt);
+        console.log(this.state.searchTerm);
     }
 
     render() {
@@ -54,40 +57,27 @@ class AddPodcast extends Component {
                 <div style={{textAlign: 'justify'}}>
                     {messages.add_podcast_page_content}
                 </div>
-                <div style={minHeightStyle}>
-                    <div className={css.flexBoxGrid.row}>
-                        <div className={css.flexBoxGrid['col-xs-8']} style={center}>
-                            <AutoComplete
-                                key="textfieldSearchPodcast"
-                                hintText=""
-                                dataSource={this.state.dataSource}
-                                onUpdateInput={this.handleUpdateInput}
-                                floatingLabelText={messages.add_podcast_page_search_hint}
-                                fullWidth={true} />
-                        </div>
-                        <div className={css.flexBoxGrid['col-xs-4']} style={middle}>
-                            <RaisedButton
-                                icon={<i className={icons.search} style={{color: 'white'}} />}
-                                primary={true} />
-                        </div>
-                    </div>
-                </div>
                 <br />
-                <div>
-                    <Divider /><br />
-                    <div className={css.flexBoxGrid.row}>
-                        <div className={css.flexBoxGrid['col-xs-6']} style={center}>
-                            <RaisedButton
-                                label={messages.add_podcast_button_label}
-                                primary={true} />
+                <div style={minHeightStyle}>
+                    <Paper zDepth={1} style={{height: 55}}>
+                        <div className={css.flexBoxGrid.row} style={{padding: 5}}>
+                            <div className={firstColumn} style={center}>
+                                <AutoComplete
+                                    searchText={this.state.searchTerm}
+                                    key="textfieldSearchPodcast"
+                                    dataSource={this.state.dataSource}
+                                    onUpdateInput={this.handleUpdateInput}
+                                    hintText={messages.add_podcast_page_search_hint}
+                                    fullWidth={true}
+                                    style={{height: 60}} />
+                            </div>
+                            <div className={secondColumn}>
+                                <IconButton onClick={this.handleClickSearch} iconClassName={icons.search} />
+                            </div>
                         </div>
-                        <div className={css.flexBoxGrid['col-xs-6']} style={center}>
-                            <Link to="/">
-                                <RaisedButton label={messages.back_button_label} />
-                            </Link>
-                        </div>
-                    </div>
+                    </Paper>
                 </div>
+                <br /><Divider /><br />
             </div>
         );
     }
