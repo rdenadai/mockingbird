@@ -22,7 +22,7 @@ export async function loadMessagesFromDatabase() {
 export async function loadMessagesFromNetwork(language = 'en') {
     let content = null;
     try {
-        content = await axios.get('/messages', { params: { language: language } });
+        content = await axios.get(`/messages/${language}`);
     } catch(exception) {
         // silence
     }
