@@ -15,6 +15,9 @@ from werkzeug.exceptions import abort
 
 from server.controllers import app_page
 
+from configuration import Config
+
+
 # -----------------------------------------------------
 # Flask-Compress
 # -----------------------------------------------------
@@ -26,7 +29,7 @@ cache = Cache(config={'CACHE_TYPE': 'memcached'})
 # -----------------------------------------------------
 # Flask Application
 # -----------------------------------------------------
-app = Flask(__name__)
+app = Flask(Config.NAME)
 # -----------------------------------------------------
 # Compressing to gzip integration!
 # -----------------------------------------------------

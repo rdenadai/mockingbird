@@ -7,7 +7,7 @@ import SearchTermReducer from './search_term_reducer';
 const rootReducer = combineReducers({
     messages: MessagesReducer,
     config: ConfigurationReducer,
-    search_result: SearchTermReducer
+    add_podcast: SearchTermReducer
 });
 
 export default rootReducer;
