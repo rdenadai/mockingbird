@@ -17,8 +17,10 @@ export function getPodcasts(term) {
         dispatch({ type: FETCH_SEARCH_TERM, payload: true });
 
         const response = await searchForTermInBackend(term);
-        if(response.status === 200) {
-            payload = response.data;
+        if(!!response) {
+            if(response.status === 200) {
+                payload = response.data;
+            }
         }
 
         dispatch({ type: FETCH_PODCASTS, payload: payload });

@@ -13,7 +13,9 @@ import IconButton from 'material-ui/IconButton';
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 
 import Loading from '../components/loading';
-import SearchBox from '../components/search_box';
+import SearchBox from './search_box';
+
+const uuid = require('uuid');
 
 
 const cssListFill = {
@@ -34,9 +36,25 @@ class AddPodcast extends Component {
     }
 
     onItemTouchTap = (evt, child) => {
-        console.log(evt);
-        console.log(child);
-        console.log(child.key);
+        try {
+            const key = child.key.split('-');
+            const id = key[1];
+            if(!!id) {
+                this.context.router.push(`/app/show/${id}`);
+            }
+        } catch(exception) {
+            // silence
+        }
+    }
+
+    onClickListItem = (id) => {
+        try {
+            if(!!id) {
+                this.context.router.push(`/app/show/${id}`);
+            }
+        } catch(exception) {
+            // silence
+        }
     }
 
     renderPodcastItemList = (podcastItem) => {
@@ -67,14 +85,15 @@ class AddPodcast extends Component {
         );
 
         return (
-            <div>
+            <div key={uuid()}>
                 <ListItem
                     key={id}
-                    leftAvatar={<Avatar size={45} src={img} />}
+                    onTouchTap={this.onClickListItem.bind(this, id)}
+                    leftAvatar={<Avatar style={{top: 10}} size={50} src={img} />}
                     rightIconButton={rightIconMenu}
                     primaryText={album}
                     secondaryText={artist} />
-                <Divider inset={true} />
+                <Divider key={uuid()} inset={true} />
             </div>
         );
     }
@@ -118,6 +137,11 @@ class AddPodcast extends Component {
         );
     }
 }
+
+// ask for `router` from context
+AddPodcast.contextTypes = {
+    router: React.PropTypes.object
+};
 
 AddPodcast.propTypes = {
     messages: React.PropTypes.object,
