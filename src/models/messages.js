@@ -13,6 +13,7 @@ export const messagesModel = {
 
         'add_podcast_page_content': 'Search for a podcast we have in our knowledge base by some name or the url (if you know).',
         'add_podcast_page_search_hint': 'Search podcast...',
-        'add_podcast_button_label': 'Add'
+        'add_podcast_button_label': 'Add',
+        'no_podcast_found': 'Your search didn\'t find any podcasts... please, review the word you typed and try again.'
     }
 };

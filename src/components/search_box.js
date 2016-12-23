@@ -64,7 +64,7 @@ class SearchBox extends Component {
                             hintText={messages.add_podcast_page_search_hint}
                             onChange={this.handleUpdateInput}
                             onKeyPress={this.handleSearchInputKeyPress}
-                            autoFocus={true}
+                            autoFocus
                             fullWidth={true}
                             style={{height: 50}} />
                     </div>

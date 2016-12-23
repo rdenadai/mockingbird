@@ -57,10 +57,10 @@ class App extends Component {
         if(!!messages) {
             return (
                 <MuiThemeProvider muiTheme={muiTheme}>
-                    <div>
+                    <div className={css.baseCSS.fullHeight}>
                         <AppDrawer />
-                        <div className={css.baseCSS.content}>
-                            <div className={css.baseCSS.contentMargins}>
+                        <div className={css.baseCSS.content + ' ' + css.baseCSS.fullHeightExceptHeader}>
+                            <div className={css.baseCSS.contentMargins + ' ' + css.baseCSS.fullHeight}>
                                 <ReactTransitionGroup>
                                     <AnimatedBox key={uuid()}>
                                         {children}

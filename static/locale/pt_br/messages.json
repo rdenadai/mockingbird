@@ -13,6 +13,7 @@
 
         "add_podcast_page_content": "Para procurar por um novo podcast na nossa base digite um nome ou a url (caso souber).",
         "add_podcast_page_search_hint": "Procurar podcast...",
-        "add_podcast_button_label": "Adicionar"
+        "add_podcast_button_label": "Adicionar",
+        "no_podcast_found": "Sua busca não retornou nenhum podcast... por favor, reveja o que digitou e tente novamente."
     }
 }

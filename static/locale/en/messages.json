@@ -13,6 +13,7 @@
 
         "add_podcast_page_content": "Search for a podcast we have in our knowledge base or type in the url for one that you know.",
         "add_podcast_page_search_hint": "Search podcast...",
-        "add_podcast_button_label": "Add"
+        "add_podcast_button_label": "Add",
+        "no_podcast_found": "Your search didn't find any podcasts... please, review the word you typed and try again."
     }
 }

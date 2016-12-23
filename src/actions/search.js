@@ -11,9 +11,17 @@ export async function searchingForTerm(searching) {
 
 export function getPodcasts(term) {
     return async (dispatch) => {
-        dispatch({ type: FETCH_PODCASTS, payload: {data: []} });
+        let payload = [];
+
+        dispatch({ type: FETCH_PODCASTS, payload: payload });
         dispatch({ type: FETCH_SEARCH_TERM, payload: true });
-        dispatch({ type: FETCH_PODCASTS, payload: await searchForTermInBackend(term) });
+
+        const response = await searchForTermInBackend(term);
+        if(response.status === 200) {
+            payload = response.data;
+        }
+
+        dispatch({ type: FETCH_PODCASTS, payload: payload });
         dispatch({ type: FETCH_SEARCH_TERM, payload: false });
     };
 }

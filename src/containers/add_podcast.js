@@ -1,28 +1,42 @@
+import { css } from '../css';
+
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
+import {grey400} from 'material-ui/styles/colors';
 import Divider from 'material-ui/Divider';
-
 import {List, ListItem} from 'material-ui/List';
 import Avatar from 'material-ui/Avatar';
-import ActionInfo from 'material-ui/svg-icons/action/info';
+import IconMenu from 'material-ui/IconMenu';
+import MenuItem from 'material-ui/MenuItem';
+import IconButton from 'material-ui/IconButton';
+import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 
 import Loading from '../components/loading';
 import SearchBox from '../components/search_box';
+
+
+const cssListFill = {
+    height: 'calc(100% - 160px)'
+};
+
+const listCSS = {
+    diplay: 'block',
+    height: '100%',
+    overflow: 'auto'
+};
 
 
 class AddPodcast extends Component {
 
     constructor(props) {
         super(props);
+    }
 
-        const windowHeight = window.innerHeight
-        || document.documentElement.clientHeight
-        || document.body.clientHeight;
-
-        this.state = {
-            windowHeight: windowHeight - 250
-        };
+    onItemTouchTap = (evt, child) => {
+        console.log(evt);
+        console.log(child);
+        console.log(child.key);
     }
 
     renderPodcastItemList = (podcastItem) => {
@@ -30,48 +44,75 @@ class AddPodcast extends Component {
         const artist = podcastItem.artistName;
         const album = podcastItem.collectionName;
         const img = podcastItem.artworkUrl60;
+
+        const iconButtonElement = (
+            <IconButton
+                touch={true}
+                tooltip="more"
+                tooltipPosition="bottom-left">
+                <MoreVertIcon color={grey400} />
+            </IconButton>
+        );
+
+        const replyKey = 'reply-' + id;
+        const forwardKey = 'forward-' + id;
+        const deleteKey = 'delete-' + id;
+
+        const rightIconMenu = (
+            <IconMenu iconButtonElement={iconButtonElement} onItemTouchTap={this.onItemTouchTap}>
+                <MenuItem key={replyKey}>Reply</MenuItem>
+                <MenuItem key={forwardKey}>Forward</MenuItem>
+                <MenuItem key={deleteKey}>Delete</MenuItem>
+            </IconMenu>
+        );
+
         return (
-            <ListItem
-                key={id}
-                leftAvatar={<Avatar src={img} />}
-                rightIcon={<ActionInfo />}
-                primaryText={album}
-                secondaryText={artist} />
+            <div>
+                <ListItem
+                    key={id}
+                    leftAvatar={<Avatar size={45} src={img} />}
+                    rightIconButton={rightIconMenu}
+                    primaryText={album}
+                    secondaryText={artist} />
+                <Divider inset={true} />
+            </div>
         );
     }
 
     showListOfSearchResults = () => {
+        if(this.props.searching) {
+            return <Loading />;
+        }
+
+        const messages = this.props.messages;
+        let component = (<div>{messages.no_podcast_found}</div>);
         if(this.props.podcasts.length > 0) {
-            return (
-                <div>
-                    <Divider /><br />
-                    <List style={{maxHeight: this.state.windowHeight, overflow: 'auto'}}>
+            component = (
+                <div style={cssListFill}>
+                    <List style={listCSS}>
                         {this.props.podcasts.map(this.renderPodcastItemList)}
                     </List>
                 </div>
             );
         }
-
-        if(this.props.searching) {
-            return <Loading />;
-        }
-
-        return null;
+        return component;
     }
 
     render() {
         const messages = this.props.messages;
 
         return (
-            <div>
-                <div style={{textAlign: 'justify'}}>
-                    {messages.add_podcast_page_content}
-                </div>
-                <br />
+            <div className={css.baseCSS.fullHeight}>
                 <div>
-                    <SearchBox />
+                    <div style={{textAlign: 'justify'}}>
+                        {messages.add_podcast_page_content}
+                    </div>
+                    <br />
+                    <div>
+                        <SearchBox />
+                    </div>
+                    <br /><Divider /><br />
                 </div>
-                <br />
                 {this.showListOfSearchResults()}
             </div>
         );

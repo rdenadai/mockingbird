@@ -1,3 +1,8 @@
+* {
+    /* So 100% means 100% */
+    box-sizing: border-box;
+}
+
 html, body {
     margin: 0px;
     padding: 0px;
@@ -10,8 +15,16 @@ html, body {
 .content {
     width: 100%;
     min-width: 100%;
+}
+
+.fullHeight {
     height: 100%;
     min-height: 100%;
+}
+
+.fullHeightExceptHeader {
+    height: calc(100% - 84px);
+    min-height: calc(100% - 84px);
 }
 
 .contentMargins {

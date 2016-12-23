@@ -52,7 +52,7 @@ class AnimatedBox extends Component {
     render() {
         const children = !!this.props.children ? this.props.children : null;
         return (
-            <div className={css.baseCSS.animatedBox}>
+            <div className={css.baseCSS.animatedBox + ' ' + css.baseCSS.fullHeight}>
                 {children}
             </div>
         );
