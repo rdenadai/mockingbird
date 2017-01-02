@@ -1,6 +1,5 @@
 import { css } from '../css';
 
-
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 

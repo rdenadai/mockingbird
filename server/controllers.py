@@ -6,6 +6,7 @@ from flask import jsonify
 from jinja2 import TemplateNotFound
 
 from server.bizz import search_term
+from server.bizz import show_podcast
 
 
 app_page = Blueprint('app_page', __name__, template_folder='templates')
@@ -19,5 +20,10 @@ def messages(language):
 
 
 @app_page.route("/search/<term>")
-def search(term):
+def view_search_term(term):
     return jsonify(search_term(term))
+
+
+@app_page.route("/view/<id>")
+def view_podcast_by_id(id):
+    return jsonify(show_podcast(id))

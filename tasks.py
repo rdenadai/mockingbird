@@ -4,9 +4,11 @@ import feedparser
 
 from celery import Celery
 
-from server.database import Database
 from configuration import Config
+from server.database import Database
+
 from server.bizz_support import _load_podcasts_from_itunes
+from server.bizz_support import _load_podcast_info_from_itunes
 
 
 celery = Celery(Config.NAME, broker="redis://localhost:6379/0")
@@ -27,7 +29,7 @@ def parser_itunes_response(itunes_response):
             }, item, upsert=True)
             parser_podcast_rss.delay(item['collectionId'], item['feedUrl'])
     else:
-        # TODO: Better error handler
+        # TODO(Better error handler)
         print("Error: No database found")
 
 
@@ -42,7 +44,8 @@ def load_from_itunes(term):
 @celery.task
 def parser_podcast_rss(podcast_id, url):
     # Select shows! By order...
-    # podcast_episode.find({'collectionId': 979020229}).sort( { number: -1 } )[0]
+    # podcast_episode.find(
+    #    {'collectionId': 979020229}).sort( { number: -1 } )[0]
     mongodb = Database.get_mongodb_database(False)
     if mongodb:
         podcast_episode = mongodb.podcast_episode
@@ -58,6 +61,11 @@ def parser_podcast_rss(podcast_id, url):
                     if 'audio' in link.get('type', ''):
                         audio = link.get('href', '')
                         size = link.get('length', 0)
+
+                # In the future, we could get image from episode using
+                # p = BeautifulSoup(show.get('content')[0].get('value'), 'lxml')
+                # Hoping that the image bring back by this is the right one
+                # p.find('img')
 
                 episode = {
                     'collectionId': podcast_id,
@@ -78,7 +86,7 @@ def parser_podcast_rss(podcast_id, url):
                 }, episode, upsert=True)
                 number -= 1
     else:
-        # TODO: Better error handler
+        # TODO(Better error handler)
         print("Error: No database found")
 
 
@@ -90,5 +98,25 @@ def record_search_term(term):
             'term': term
         }, {'term': term}, upsert=True)
     else:
-        # TODO: Better error handler
+        # TODO(Better error handler)
         print("Error: No database found")
+
+
+@celery.task
+def background_itunes():
+    mongodb = Database.get_mongodb_database(False)
+    if mongodb:
+        podcasts = mongodb.podcast.find()
+        for podcast in podcasts:
+            success, response = _load_podcast_info_from_itunes(podcast['collectionId'])
+            if success:
+                parser_itunes_response.delay(response)
+
+
+@celery.task
+def background_rss():
+    mongodb = Database.get_mongodb_database(False)
+    if mongodb:
+        podcasts = mongodb.podcast.find()
+        for podcast in podcasts:
+            parser_podcast_rss.delay(podcast['collectionId'], podcast['feedUrl'])

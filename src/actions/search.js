@@ -1,5 +1,5 @@
-import { searchForTermInBackend } from '../events/search';
 import { FETCH_PODCASTS, FETCH_SEARCH_TERM } from '../action_types';
+import { searchForTermInBackend } from '../events/search';
 
 
 export async function searchingForTerm(searching) {

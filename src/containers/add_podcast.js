@@ -84,12 +84,16 @@ class AddPodcast extends Component {
             </IconMenu>
         );
 
+        const avatar = (
+            <Avatar className={css.baseCSS.avatarCSS} size={55} src={img} />
+        );
+
         return (
             <div key={uuid()}>
                 <ListItem
                     key={id}
                     onTouchTap={this.onClickListItem.bind(this, id)}
-                    leftAvatar={<Avatar style={{top: 10}} size={50} src={img} />}
+                    leftAvatar={avatar}
                     rightIconButton={rightIconMenu}
                     primaryText={album}
                     secondaryText={artist} />
