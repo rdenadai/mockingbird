@@ -11,7 +11,7 @@ from server.bizz_support import _load_podcasts_from_itunes
 from server.bizz_support import _load_podcast_info_from_itunes
 
 
-celery = Celery(Config.NAME, broker="redis://localhost:6379/0")
+celery = Celery(Config.NAME, broker=Config.REDIS_URI)
 celery.conf.update(
     BROKER_URL=Config.REDIS_URI,
     CELERY_RESULT_BACKEND=Config.REDIS_URI
