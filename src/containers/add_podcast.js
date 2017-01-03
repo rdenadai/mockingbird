@@ -15,6 +15,8 @@ import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 import Loading from '../components/loading';
 import SearchBox from './search_box';
 
+import { addPodcastDatabase, removePodcastDatabase } from '../actions/podcast';
+
 const uuid = require('uuid');
 
 
@@ -40,7 +42,12 @@ class AddPodcast extends Component {
             const key = child.key.split('-');
             const id = key[1];
             if(!!id) {
-                this.context.router.push(`/app/show/${id}`);
+                if(key[0] === 'add') {
+                    this.props.addPodcastDatabase(id);
+                } else if(key[0] === 'remove') {
+                    this.props.removePodcastDatabase(id);
+                }
+                // this.context.router.push(`/app/show/${id}`);
             }
         } catch(exception) {
             // silence
@@ -58,6 +65,8 @@ class AddPodcast extends Component {
     }
 
     renderPodcastItemList = (podcastItem) => {
+        const messages = this.props.messages;
+
         const id = podcastItem.collectionId;
         const artist = podcastItem.artistName;
         const album = podcastItem.collectionName;
@@ -72,15 +81,13 @@ class AddPodcast extends Component {
             </IconButton>
         );
 
-        const replyKey = 'reply-' + id;
-        const forwardKey = 'forward-' + id;
-        const deleteKey = 'delete-' + id;
+        const addKey = 'add-' + id;
+        const removeKey = 'remove-' + id;
 
         const rightIconMenu = (
             <IconMenu iconButtonElement={iconButtonElement} onItemTouchTap={this.onItemTouchTap}>
-                <MenuItem key={replyKey}>Reply</MenuItem>
-                <MenuItem key={forwardKey}>Forward</MenuItem>
-                <MenuItem key={deleteKey}>Delete</MenuItem>
+                <MenuItem key={addKey}>{messages.add}</MenuItem>
+                <MenuItem key={removeKey}>{messages.remove}</MenuItem>
             </IconMenu>
         );
 
@@ -150,7 +157,9 @@ AddPodcast.contextTypes = {
 AddPodcast.propTypes = {
     messages: React.PropTypes.object,
     searching: React.PropTypes.bool,
-    podcasts: React.PropTypes.array
+    podcasts: React.PropTypes.array,
+    addPodcastDatabase: React.PropTypes.func,
+    removePodcastDatabase: React.PropTypes.func
 };
 
 // React-Redux integration...
@@ -162,4 +171,4 @@ function mapStateToProps(state) {
     };
 }
 
-export default connect(mapStateToProps)(AddPodcast);
+export default connect(mapStateToProps, { addPodcastDatabase, removePodcastDatabase })(AddPodcast);

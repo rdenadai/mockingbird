@@ -1,6 +1,9 @@
 {
     "revision": 0.1,
     "data": {
+        "add": "Adicionar",
+        "remove": "Remover",
+
         "online": "Você está online! :D",
         "offline": "Você está offline... :(",
         "back_button_label": "Voltar",
@@ -10,6 +13,8 @@
         "menu_add_podcast": "Novo Podcast",
 
         "btn_new_podcast_label": "Novo Podcast",
+        "btn_add_podcast_label": "Adicionar",
+        "btn_update_label": "Atualizar",
 
         "add_podcast_page_content": "Para procurar por um novo podcast na nossa base digite um nome ou a url (caso souber).",
         "add_podcast_page_search_hint": "Procurar podcast...",

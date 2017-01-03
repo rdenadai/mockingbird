@@ -37,11 +37,13 @@ export async function savePodcastInfo(id, content) {
     try {
         if(!!document) {
             document.data = content.data;
+            document.saved = true;
             document.updated_at = moment().format(dateFormat);
         } else {
             document = {
                 _id: id,
                 data: content.data,
+                saved: true,
                 updated_at: moment().format(dateFormat)
             };
         }
@@ -51,4 +53,18 @@ export async function savePodcastInfo(id, content) {
         // silence
     }
     return document;
+}
+
+
+export async function removePodcastInfo(id) {
+    try {
+        const document = await db.get(id);
+        if(!!document) {
+            await db.remove(document);
+            return true;
+        }
+    } catch(exception) {
+        // silence
+    }
+    return false;
 }

@@ -1,6 +1,9 @@
 export const messagesModel = {
     revision: 0.1,
     data: {
+        'add': 'Add',
+        'remove': 'Remove',
+
         'online': 'You are online! :D',
         'offline': 'You are offline... :(',
         'back_button_label': 'Back',
@@ -10,6 +13,8 @@ export const messagesModel = {
         'menu_add_podcast': 'New Podcast',
 
         'btn_new_podcast_label': 'New Podcast',
+        'btn_add_podcast_label': 'Add',
+        'bnt_update_label': 'Update',
 
         'add_podcast_page_content': 'Search for a podcast we have in our knowledge base by some name or the url (if you know).',
         'add_podcast_page_search_hint': 'Search podcast...',

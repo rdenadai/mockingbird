@@ -5,7 +5,7 @@ import os
 
 class Config(object):
     NAME = 'mockingbird'
-    DEBUG = True
+    DEBUG = False
     COMPRESS_LEVEL = 9
     ASSETS_DEBUG = True
     MONGODB_URI = os.environ.get("MONGODB_URI") if DEBUG == False else "mongodb://localhost:27017/mockingbird"
