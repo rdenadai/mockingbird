@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 
+from random import randint
+
 import feedparser
 
 from celery import Celery
@@ -67,9 +69,11 @@ def parser_podcast_rss(podcast_id, url):
                 # Hoping that the image bring back by this is the right one
                 # p.find('img')
 
+                guid = show.get('guid', str(randint(1000, 99999)) + '_')
                 episode = {
                     'collectionId': podcast_id,
-                    'guid': show.get('guid'),
+                    'id': str(sum([ord(i) for i in guid])),
+                    'guid': guid,
                     'number': number,
                     'author': show.get('author', ''),
                     'title': show.get('title', ''),

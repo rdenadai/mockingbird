@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 
+import requests
+
 from flask import current_app, Blueprint, render_template, abort
 from flask import redirect, request, send_from_directory
 from flask import jsonify
@@ -27,3 +29,15 @@ def view_search_term(term):
 @app_page.route("/view/<id>")
 def view_podcast_by_id(id):
     return jsonify(show_podcast(id))
+
+
+@app_page.route("/download/<url>")
+def view_download_url(url):
+    local_filename = url.split('/')[-1]
+    r = requests.get(url, stream=True)
+    if r.status_code == 200:
+        with open(local_filename, 'wb') as f:
+            for chunk in r.iter_content(chunk_size=1024):
+                if chunk: # filter out keep-alive new chunks
+                    f.write(chunk)
+    return local_filename

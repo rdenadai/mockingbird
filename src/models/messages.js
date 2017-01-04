@@ -15,6 +15,7 @@ export const messagesModel = {
         'btn_new_podcast_label': 'New Podcast',
         'btn_add_podcast_label': 'Add',
         'bnt_update_label': 'Update',
+        'bnt_remove_label': 'Remove',
 
         'add_podcast_page_content': 'Search for a podcast we have in our knowledge base by some name or the url (if you know).',
         'add_podcast_page_search_hint': 'Search podcast...',

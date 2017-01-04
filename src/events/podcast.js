@@ -3,10 +3,10 @@ import { db, dateFormat } from '../utils';
 import axios from 'axios';
 
 
-export async function loadPodcastInfoFromDatabase(id) {
+export async function loadPodcastInfoFromDatabase(podcastId) {
     let document = null;
     try {
-        document = await db.get(id);
+        document = await db.get(podcastId);
     } catch(exception) {
         // silence
     }
@@ -14,10 +14,10 @@ export async function loadPodcastInfoFromDatabase(id) {
 }
 
 
-export async function loadPodcastInfoFromServer(id) {
+export async function loadPodcastInfoFromServer(podcastId) {
     let content = null;
     try {
-        content = await axios.get(`/view/${id}`);
+        content = await axios.get(`/view/${podcastId}`);
     } catch(exception) {
         // silence
         console.log(exception);
@@ -26,10 +26,10 @@ export async function loadPodcastInfoFromServer(id) {
 }
 
 
-export async function savePodcastInfo(id, content) {
+export async function savePodcastInfo(podcastId, content) {
     let document = null;
     try {
-        document = await db.get(id);
+        document = await db.get(podcastId);
     } catch(exception) {
         // silence
     }
@@ -41,7 +41,7 @@ export async function savePodcastInfo(id, content) {
             document.updated_at = moment().format(dateFormat);
         } else {
             document = {
-                _id: id,
+                _id: podcastId,
                 data: content.data,
                 saved: true,
                 updated_at: moment().format(dateFormat)
@@ -56,9 +56,9 @@ export async function savePodcastInfo(id, content) {
 }
 
 
-export async function removePodcastInfo(id) {
+export async function removePodcastInfo(podcastId) {
     try {
-        const document = await db.get(id);
+        const document = await db.get(podcastId);
         if(!!document) {
             await db.remove(document);
             return true;

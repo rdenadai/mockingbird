@@ -15,7 +15,14 @@ const uuid = require('uuid');
 
 import Loading from '../components/loading';
 
-import { showPodcastInfo, addPodcastDatabase } from '../actions/podcast';
+import { download } from '../utils/index';
+
+import {
+    showPodcastInfo,
+    addPodcastDatabase,
+    removePodcastDatabase,
+    downloadEpisodeAudio
+} from '../actions/podcast';
 
 
 // const center = { textAlign: 'center' };
@@ -57,6 +64,11 @@ class ShowPodcast extends Component {
         this.props.addPodcastDatabase(id);
     }
 
+    onClickRemovePodcast() {
+        const id = this.props.params.id;
+        this.props.removePodcastDatabase(id);
+    }
+
     onClickRSSFeed() {
         location.href = this.props.podcast.info.feedUrl;
     }
@@ -66,10 +78,11 @@ class ShowPodcast extends Component {
         console.log(collectionId);
         console.log(audio);
         console.log(audioSize);
+        this.props.download(audio);
     }
 
     renderPodcastEpisodesList = (episode) => {
-        const id = episode.guid;
+        const id = episode.id;
         const collectionId = episode.collectionId;
         const title = episode.title;
         const description = episode.description;
@@ -127,11 +140,19 @@ class ShowPodcast extends Component {
 
             if(saved) {
                 button = (
-                    <div style={padding}>
-                        <RaisedButton
-                            label={messages.bnt_update_label}
-                            primary={true}
-                            onClick={this.onClickUpdatePodcast.bind(this)} />
+                    <div style={{display: 'inline-block'}}>
+                        <div style={padding}>
+                            <RaisedButton
+                                label={messages.bnt_update_label}
+                                primary={true}
+                                onClick={this.onClickUpdatePodcast.bind(this)} />
+                        </div>
+                        <div style={padding}>
+                            <RaisedButton
+                                label={messages.bnt_remove_label}
+                                primary={true}
+                                onClick={this.onClickRemovePodcast.bind(this)} />
+                        </div>
                     </div>
                 );
             }
@@ -175,7 +196,10 @@ ShowPodcast.propTypes = {
     messages: React.PropTypes.object,
     podcast: React.PropTypes.object,
     showPodcastInfo: React.PropTypes.func,
-    addPodcastDatabase: React.PropTypes.func
+    addPodcastDatabase: React.PropTypes.func,
+    removePodcastDatabase: React.PropTypes.func,
+    downloadEpisodeAudio: React.PropTypes.func,
+    download: React.PropTypes.func
 };
 
 // React-Redux integration...
@@ -186,4 +210,6 @@ function mapStateToProps(state) {
     };
 }
 
-export default connect(mapStateToProps, { showPodcastInfo, addPodcastDatabase })(ShowPodcast);
+const mapDispatchToProps = { showPodcastInfo, addPodcastDatabase, removePodcastDatabase, downloadEpisodeAudio, download };
+
+export default connect(mapStateToProps, mapDispatchToProps)(ShowPodcast);
