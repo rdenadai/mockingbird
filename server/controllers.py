@@ -7,6 +7,7 @@ from flask import redirect, request, send_from_directory
 from flask import jsonify
 from jinja2 import TemplateNotFound
 
+from server.bizz import get_episode_audio
 from server.bizz import search_term
 from server.bizz import show_podcast
 
@@ -31,13 +32,6 @@ def view_podcast_by_id(id):
     return jsonify(show_podcast(id))
 
 
-@app_page.route("/download/<url>")
-def view_download_url(url):
-    local_filename = url.split('/')[-1]
-    r = requests.get(url, stream=True)
-    if r.status_code == 200:
-        with open(local_filename, 'wb') as f:
-            for chunk in r.iter_content(chunk_size=1024):
-                if chunk: # filter out keep-alive new chunks
-                    f.write(chunk)
-    return local_filename
+@app_page.route("/download/<episode_id>")
+def view_download_url(episode_id):
+    return get_episode_audio(episode_id)

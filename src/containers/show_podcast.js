@@ -15,8 +15,6 @@ const uuid = require('uuid');
 
 import Loading from '../components/loading';
 
-import { download } from '../utils/index';
-
 import {
     showPodcastInfo,
     addPodcastDatabase,
@@ -73,35 +71,41 @@ class ShowPodcast extends Component {
         location.href = this.props.podcast.info.feedUrl;
     }
 
-    onClickListItem(id, collectionId, audio, audioSize) {
+    onClickListItem(id, collectionId, audioUrl, audioExtension, audioSize) {
         console.log(id);
         console.log(collectionId);
-        console.log(audio);
+        console.log(audioUrl);
         console.log(audioSize);
-        this.props.download(audio);
+        this.props.downloadEpisodeAudio(collectionId, id, audioExtension);
     }
 
     renderPodcastEpisodesList = (episode) => {
+        const saved = this.props.podcast.saved;
+
         const id = episode.id;
         const collectionId = episode.collectionId;
         const title = episode.title;
         const description = episode.description;
-        const audio = episode.audio;
+        const audioUrl = episode.audio_url;
+        const audioExtension = episode.audio_extension;
         const audioSize = episode.audio_size;
 
         // const duration = episode.duration;
 
         // const published = episode.published;
 
-        const rightIconButton = (
-            <IconButton
-                touch={true}
-                onClick={this.onClickListItem.bind(this, id, collectionId, audio, audioSize)}
-                tooltip="download"
-                tooltipPosition="bottom-left">
-                <FontIcon className={downloadIcon} color={blueGrey800} />
-            </IconButton>
-        );
+        let rightIconButton = null;
+        if(saved) {
+            rightIconButton = (
+                <IconButton
+                    touch={true}
+                    onClick={this.onClickListItem.bind(this, id, collectionId, audioUrl, audioExtension, audioSize)}
+                    tooltip="download"
+                    tooltipPosition="bottom-left">
+                    <FontIcon className={downloadIcon} color={blueGrey800} />
+                </IconButton>
+            );
+        }
 
         const avatar = (
             <Avatar className={css.baseCSS.avatarCSS} size={55} src={this.props.podcast.data.info.artworkUrl60} />
@@ -198,8 +202,7 @@ ShowPodcast.propTypes = {
     showPodcastInfo: React.PropTypes.func,
     addPodcastDatabase: React.PropTypes.func,
     removePodcastDatabase: React.PropTypes.func,
-    downloadEpisodeAudio: React.PropTypes.func,
-    download: React.PropTypes.func
+    downloadEpisodeAudio: React.PropTypes.func
 };
 
 // React-Redux integration...
@@ -210,6 +213,6 @@ function mapStateToProps(state) {
     };
 }
 
-const mapDispatchToProps = { showPodcastInfo, addPodcastDatabase, removePodcastDatabase, downloadEpisodeAudio, download };
+const mapDispatchToProps = { showPodcastInfo, addPodcastDatabase, removePodcastDatabase, downloadEpisodeAudio };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ShowPodcast);

@@ -1,5 +1,12 @@
 import { FETCH_PODCAST_INFO } from '../action_types';
-import { loadPodcastInfoFromDatabase, loadPodcastInfoFromServer, savePodcastInfo, removePodcastInfo } from '../events/podcast';
+import {
+    loadPodcastInfoFromDatabase,
+    loadPodcastInfoFromServer,
+    savePodcastInfo,
+    removePodcastInfo,
+    downloadPodcastEpisodeAudio,
+    savePodcastEpisodeAudio
+} from '../events/podcast';
 
 
 export async function showPodcastInfo(podcastId) {
@@ -49,10 +56,16 @@ export async function downloadPodcastImage(podcastId) {
 }
 
 
-export async function downloadEpisodeAudio(podcastId, episodeId) {
+export async function downloadEpisodeAudio(podcastId, episodeId, audioExtension) {
     return async (dispatch) => {
-        console.log(podcastId);
-        console.log(episodeId);
+        dispatch({ type: FETCH_PODCAST_INFO, payload: { data: null, saved: true } });
+
+        const filename = `${episodeId}.${audioExtension}`;
+        const contentType = `audio/${audioExtension}`;
+
+        const audioFile = await downloadPodcastEpisodeAudio(episodeId);
+        await savePodcastEpisodeAudio(podcastId, episodeId, filename, contentType, audioFile);
+
         dispatch({ type: FETCH_PODCAST_INFO, payload: { data: null, saved: true } });
     };
 }

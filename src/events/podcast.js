@@ -68,3 +68,70 @@ export async function removePodcastInfo(podcastId) {
     }
     return false;
 }
+
+
+export async function downloadPodcastEpisodeAudio(episodeId) {
+    let content = null;
+    try {
+        content = await axios.get(`/download/${episodeId}`);
+    } catch(exception) {
+        // silence
+        console.log(exception);
+    }
+    return content;
+}
+
+
+export async function savePodcastEpisodeAudio(podcastId, episodeId, filename, contentType, audioFile) {
+    const id = podcastId + '.' + episodeId;
+
+    let document = null;
+    try {
+        document = await db.get(id);
+    } catch(exception) {
+        // silence
+    }
+
+    const attachment = {};
+    attachment[filename] = {
+        'content_type': contentType,
+        'data': audioFile
+    };
+
+    try {
+        if(!!document) {
+            document.podcastId = podcastId;
+            document.episodeId = episodeId;
+            document._attachments = attachment;
+            document.saved = true;
+            document.updated_at = moment().format(dateFormat);
+        } else {
+            document = {
+                _id: id,
+                podcastId: podcastId,
+                episodeId: episodeId,
+                _attachments: attachment,
+                saved: true,
+                updated_at: moment().format(dateFormat)
+            };
+        }
+        document = await db.put(document);
+        document = await db.get(document.id);
+    } catch(exception) {
+        // silence
+    }
+    return document;
+}
+
+
+export async function loadPodcastEpisodeFromDatabase(podcastId, episodeId, filename) {
+    const id = podcastId + '.' + episodeId;
+
+    let document = null;
+    try {
+        document = await db.getAttachment(id, filename);
+    } catch(exception) {
+        // silence
+    }
+    return document;
+}

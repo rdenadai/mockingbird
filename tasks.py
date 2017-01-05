@@ -59,10 +59,21 @@ def parser_podcast_rss(podcast_id, url):
             for show in parsed['entries']:
                 audio = None
                 size = 0
+                ext = 'mp3'
                 for link in show.get('links'):
                     if 'audio' in link.get('type', ''):
-                        audio = link.get('href', '')
+                        audio_url = link.get('href', '')
                         size = link.get('length', 0)
+                        if '.mp3' in audio_url:
+                            ext = 'mp3'
+                        elif '.ogg' in audio_url:
+                            ext = 'ogg'
+                        elif '.aac' in audio_url:
+                            ext = 'aac'
+                        elif '.wma' in audio_url:
+                            ext = 'wma'
+                        elif '.flac' in audio_url:
+                            ext = 'flac'
 
                 # In the future, we could get image from episode using
                 # p = BeautifulSoup(show.get('content')[0].get('value'), 'lxml')
@@ -80,7 +91,8 @@ def parser_podcast_rss(podcast_id, url):
                     'description': show.get('description', ''),
                     'published': show.get('published', ''),
                     'duration': show.get('itunes_duration', 0),
-                    'audio': audio,
+                    'audio_url': audio_url,
+                    'audio_extension': ext,
                     'audio_size': size
                 }
 
