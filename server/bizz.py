@@ -34,8 +34,8 @@ def show_podcast(id):
 def get_episode_audio(episode_id):
     episode = _load_podcast_episode_by_id(episode_id)
     if episode:
-        url = episode.get('audio')
+        url = episode.get('audio_url')
         filename = episode.get('id')
-        ext = episode.get('audio_url', '.mp3')
+        ext = episode.get('audio_extension', '.mp3')
         return _load_episode_audio_from_networtk(filename, ext, url)
     return None

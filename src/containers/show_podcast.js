@@ -3,17 +3,11 @@ import { css } from '../css';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import Avatar from 'material-ui/Avatar';
-import FontIcon from 'material-ui/FontIcon';
-import {blueGrey800} from 'material-ui/styles/colors';
 import Divider from 'material-ui/Divider';
-import {List, ListItem} from 'material-ui/List';
-import IconButton from 'material-ui/IconButton';
 import RaisedButton from 'material-ui/RaisedButton';
 
-const uuid = require('uuid');
-
 import Loading from '../components/loading';
+import EpisodeList from '../containers/list_podcast_episodes';
 
 import {
     showPodcastInfo,
@@ -31,14 +25,6 @@ const padding = {
     padding: '10px 5px',
     display: 'inline-block'
 };
-
-const listCSS = {
-    diplay: 'block',
-    height: '100%',
-    overflow: 'auto'
-};
-
-const downloadIcon = `${css.fontAwesome.fa} ${css.fontAwesome['fa-download']}`;
 
 
 class ShowPodcast extends Component {
@@ -70,61 +56,6 @@ class ShowPodcast extends Component {
     onClickRSSFeed() {
         location.href = this.props.podcast.info.feedUrl;
     }
-
-    onClickListItem(id, collectionId, audioUrl, audioExtension, audioSize) {
-        console.log(id);
-        console.log(collectionId);
-        console.log(audioUrl);
-        console.log(audioSize);
-        this.props.downloadEpisodeAudio(collectionId, id, audioExtension);
-    }
-
-    renderPodcastEpisodesList = (episode) => {
-        const saved = this.props.podcast.saved;
-
-        const id = episode.id;
-        const collectionId = episode.collectionId;
-        const title = episode.title;
-        const description = episode.description;
-        const audioUrl = episode.audio_url;
-        const audioExtension = episode.audio_extension;
-        const audioSize = episode.audio_size;
-
-        // const duration = episode.duration;
-
-        // const published = episode.published;
-
-        let rightIconButton = null;
-        if(saved) {
-            rightIconButton = (
-                <IconButton
-                    touch={true}
-                    onClick={this.onClickListItem.bind(this, id, collectionId, audioUrl, audioExtension, audioSize)}
-                    tooltip="download"
-                    tooltipPosition="bottom-left">
-                    <FontIcon className={downloadIcon} color={blueGrey800} />
-                </IconButton>
-            );
-        }
-
-        const avatar = (
-            <Avatar className={css.baseCSS.avatarCSS} size={55} src={this.props.podcast.data.info.artworkUrl60} />
-        );
-
-        return (
-            <div key={uuid()}>
-                <ListItem
-                    key={id}
-                    leftAvatar={avatar}
-                    rightIconButton={rightIconButton}
-                    primaryText={title}
-                    secondaryText={<small><div dangerouslySetInnerHTML={{__html: description }} /></small>}
-                    secondaryTextLines={2} />
-                <Divider key={uuid()} inset={true} />
-            </div>
-        );
-    }
-
 
     render() {
         const messages = this.props.messages;
@@ -182,9 +113,10 @@ class ShowPodcast extends Component {
                         </div>
                     </div>
                     <Divider />
-                    <List style={listCSS}>
-                        {dados.episodes.map(this.renderPodcastEpisodesList)}
-                    </List>
+                    <EpisodeList
+                        dados={dados}
+                        saved={saved}
+                        image={this.props.podcast.data.info.artworkUrl60} />
                 </div>
             );
         }

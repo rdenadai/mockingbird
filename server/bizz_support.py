@@ -76,7 +76,23 @@ def _load_podcast_episode_by_id(episode_id):
     return None
 
 
+# Request
+# r = requests.get('https://talkpython.fm/episodes/download/90/data-wrangling-with-python.mp3', headers={'Range': 'bytes=0-1'})
+# Status Code Must be 206
+# r.status_code == 206
+# This line bellow we get the max file size in bytes
+# int(r.headers.get('Content-Range').split('/')[1])
 def _load_episode_audio_from_networtk(filename, ext, url):
+    bytesIO = _default_download_file(url);
+
+    return send_file(
+        bytesIO,
+        attachment_filename=filename,
+        as_attachment=True,
+        mimetype='audio/%s' % ext)
+
+
+def _default_download_file(url):
     bytesIO = BytesIO()
     r = requests.get(url, stream=True)
     if r.status_code == 200:
@@ -84,8 +100,8 @@ def _load_episode_audio_from_networtk(filename, ext, url):
             if chunk:  # filter out keep-alive new chunks
                 bytesIO.write(chunk)
         bytesIO.seek(0)
-    return send_file(
-        bytesIO,
-        attachment_filename=filename,
-        as_attachment=True,
-        mimetype='audio/%s' % ext)
+    return bytesIO
+
+
+def _async_dowload_file(url):
+    pass
