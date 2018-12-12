@@ -4,7 +4,7 @@ jsmin==2.2.1
 cssmin==0.2.0
 uwsgi==2.0.14
 ujson==1.35
-requests==2.12.3
+requests==2.20.0
 feedparser==5.2.1
 redis==2.10.5
 pymongo==3.4.0
